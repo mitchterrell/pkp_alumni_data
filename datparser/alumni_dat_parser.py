@@ -1,9 +1,18 @@
 import os
 import sys
 from datetime import datetime
+from turtle import pen
 
 ## Global Objects
-almn_dict = {}
+almn_dict   = {}
+
+## Global Headers
+gbl_headers         = []
+penn_fea_hds        = []
+penn_call_hds       = []
+penn_contact_hds    = []
+penn_eras_hds       = []
+penn_fcs_grp_hds    = []
 
 ## Util Functions
 def trim_phone_number(num_str_in):
@@ -93,18 +102,37 @@ def check_all_match(first, last, phones, init_year, do_print=True):
 
         return match[0]
 
-def dump_alumni_to_csv(path):
+def dump_alumni_to_csv(path, include_penn=False):
     with open(path, 'w') as to_dump:
         do_headers = True
         for key, value in almn_dict.items():
             if(do_headers):
-                for h,h_val in value.base_info.items():
+                # Write the basic data
+                for h in gbl_headers:
                     to_dump.write('%s,' % h)
+
                 to_dump.write('\n')
                 do_headers = False
 
             for h,h_val in value.base_info.items():
                 to_dump.write('%s,' % h_val)
+
+            # Write Pennington Data
+            if(include_penn):
+                all_penn = [
+                    [penn_fea_hds,      value.penn_fea],
+                    [penn_call_hds,     value.penn_call],
+                    [penn_contact_hds,  value.penn_contact],
+                    [penn_eras_hds,     value.penn_eras],
+                    [penn_fcs_grp_hds,  value.penn_fcs_grp],
+                    ]
+                for penn in all_penn:
+                    for ph in penn[0]:
+                        if(ph in penn[1]):
+                            to_dump.write('%s,' % (penn[1])[ph])
+                        else:
+                            to_dump.write(',')
+
             to_dump.write('\n')
 
 ## Helpful tip --> Address sometimes contain newline, in excel call clean on whole file first to remove newline
@@ -127,11 +155,12 @@ class alumni_dat:
 
 
         ## Pennington Data [0] == headers || [1] == data
-        self.penngington_feasibility_study  = []
-        self.pennington_call_status         = []
-        self.pennington_contact_list        = []
-        self.pennington_eras                = []
-        self.pennington_focus_group         = []
+        self.penn_fea        = {}
+        self.penn_call      = {}
+        self.penn_contact   = {}
+        self.penn_eras      = {}
+        self.penn_fcs_grp   = {}
+        self.all_penn_dat   = [self.penn_fea,  self.penn_call, self.penn_contact, self.penn_eras, self.penn_fcs_grp]
 
     def base_key(self):
         return self.base_info['salesforce_id']
@@ -251,6 +280,7 @@ def parse_base_file(file_in, header_in, true_switch=0, error_on_exist=False):
 
 ## Parse Baseline Alumni Object
 def parse_baseline():
+    global gbl_headers
 
     ## Extract unique list of headers between all three files
     #region
@@ -286,12 +316,21 @@ def parse_baseline():
     print('     MN Beta Alumni Count:            [%4d]' % was_mn_beta_almn_cnt)
     print('     TC Alumni Count:                 [%4d]' % was_tc_almn_cnt)
     print('     MN Base, Not MN Alum:            [%4d]' % mn_base_not_mn_almn)
-    print('     MN Alum, Not MN Base:            [%4d]' % mn_almn_not_mn_base)      
+    print('     MN Alum, Not MN Base:            [%4d]' % mn_almn_not_mn_base)  
+
+    ## Append to global header list
+    gbl_headers += headers  
     
 def parse_pennington_data():
+    global gbl_headers
+    global penn_fea_hds
+    global penn_call_hds
+    global penn_contact_hds
+    global penn_eras_hds
+    global penn_fcs_grp_hds
 
     '''
-    penngington_feasibility_study.csv:
+    penn_fea.csv:
         PCFS Rank
         Status
         Contact: PCFS Interview Date
@@ -314,12 +353,15 @@ def parse_pennington_data():
 
     pennington_dict = { }
 
+    #region Penning Feas Study
+
     ## Assimliate <first_name>_<last_name> with Baseline list, print any matches
     lines = []
     with open(penn_feasability, 'r') as penn:
         lines = penn.readlines()
 
-    headers = lines[0]
+    penn_fea_hds = lines[0].replace('\n','').split(',')
+    gbl_headers += penn_fea_hds
 
     for i in range(1, len(lines)):
         first       = lines[i].split(',')[8].lower()
@@ -330,15 +372,18 @@ def parse_pennington_data():
         match       = check_all_match(first, last, phones, init_year)
 
         if(match != None):
-            match.penngington_feasibility_study.append(headers)
-            match.penngington_feasibility_study.append(lines[i])
+            for i in range(0, len(penn_fea_hds)):
+                match.penn_fea[penn_fea_hds[i]] = lines[i]
     
-    ## Penn Call Status
+    #endregion 
+
+    #region Penn Call Status
     lines = []
     with open(penn_call_status, 'r') as penn:
         lines = penn.readlines()
 
-    headers = lines[0]
+    penn_call_hds     = lines[0].replace('\n','').split(',')
+    gbl_headers += penn_call_hds
 
     for i in range(1, len(lines)):
         first       = lines[i].split(',')[2].lower()
@@ -349,15 +394,18 @@ def parse_pennington_data():
         match       = check_all_match(first, last, phones, init_year)
 
         if(match != None):
-            match.pennington_call_status.append(headers)
-            match.pennington_call_status.append(lines[i])
+            for i in range(0, len(penn_call_hds)):
+                match.penn_call[penn_call_hds[i]] = lines[i]
 
-    ## Penn Contact List
+    #endregion
+
+    #region Penn Contact List
     lines = []
     with open(penn_contact_list, 'r') as penn:
         lines = penn.readlines()
 
-    headers = lines[0]
+    penn_contact_hds     = lines[0].replace('\n','').split(',')
+    gbl_headers += penn_contact_hds
 
     for i in range(1, len(lines)):
         first       = lines[i].split(',')[1].lower()
@@ -368,15 +416,17 @@ def parse_pennington_data():
         match       = check_all_match(first, last, phones, init_year)
 
         if(match != None):
-            match.pennington_contact_list.append(headers)
-            match.pennington_contact_list.append(lines[i])
+            for i in range(0, len(penn_contact_hds)):
+                match.penn_contact[penn_contact_hds[i]] = lines[i]
+    #endregion
 
-    ## Penn Eras
+    #region Penn Eras
     lines = []
     with open(penn_eras, 'r') as penn:
         lines = penn.readlines()
 
-    headers = lines[0]
+    penn_eras_hds     = lines[0].replace('\n','').split(',')
+    gbl_headers += penn_eras_hds
 
     for i in range(1, len(lines)):
         first       = lines[i].split(',')[1].lower().split(' ')[0]
@@ -387,16 +437,17 @@ def parse_pennington_data():
         match       = check_all_match(first, last, phones, init_year)
 
         if(match != None):
-            match.pennington_eras.append(headers)
-            match.pennington_eras.append(lines[i])
+            for i in range(0, len(penn_eras_hds)):
+                match.penn_eras[penn_eras_hds[i]] = lines[i]
+    #endregion
 
-
-    ## Penn Focus Group
+    #region Penn Focus Group
     lines = []
     with open(penn_focus_group, 'r') as penn:
         lines = penn.readlines()
 
-    headers = lines[0]
+    penn_fcs_grp_hds     = lines[0].replace('\n','').split(',')
+    gbl_headers += penn_fcs_grp_hds
 
     for i in range(1, len(lines)):
         first       = lines[i].split(',')[0].lower().split(' ')[0]
@@ -407,8 +458,9 @@ def parse_pennington_data():
         match       = check_all_match(first, last, phones, init_year)
 
         if(match != None):
-            match.pennington_focus_group.append(headers)
-            match.pennington_focus_group.append(lines[i])
+            for i in range(0, len(penn_fcs_grp_hds)):
+                match.penn_fcs_grp[penn_fcs_grp_hds[i]] = lines[i]
+    #endregion
 
 def main():
     print("==== Starting Alumni Parse ==== ")
@@ -416,10 +468,15 @@ def main():
     print('\n = Parsing Baseline =')
     parse_baseline()
 
-    # dump_alumni_to_csv(r'C:\Users\mitch\OneDrive\Documents\Masters\Misc\phi_kappa_psi\HC\new_property\misc\alumni_data\datparser\new_dumper.csv')
+    dump_alumni_to_csv(r'new_dumper.csv')
 
     print('\n = Parsing Pennington Data =')
     parse_pennington_data()
+
+    # for h in gbl_headers:
+    #     print(h)
+
+    dump_alumni_to_csv(r'new_dumper_penn.csv', include_penn=True)
 
 if __name__ == "__main__":
     main()
