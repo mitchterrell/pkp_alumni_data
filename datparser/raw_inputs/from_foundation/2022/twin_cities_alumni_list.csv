@@ -10,10 +10,10 @@ Salesforce ID,Legal First Name,Preferred First Name,Legal Last Name,Undergraduat
 0036A00000YeRDHQA3,Russell,Russell,King,Alumnus,,651-484-6932,3/26/1983,Michigan Alpha,Michigan Alpha,PO BOX 26216,MINNEAPOLIS,Minnesota,55426-0216
 0036A00000YeTB9QAN,Andrew,Andrew,Martinez,Alumnus,,616-324-4415,5/26/1988,Michigan Beta,Michigan Beta,100 3rd Avenue South #1704,Minneapolis,Minnesota,55401
 0036A00000YeKb8QAF,Terry,Terry,Palmberg,Alumnus,terry.palmberg@comcast.net,952-470-8842,11/16/1975,Tennessee Delta,Tennessee Delta,100 3rd Ave S Unit 402,Minneapolis,Minnesota,55401-2592
-0036A00000tpD07QAE,Jayanth,Jay,Jayavardhanan,Alumnus,adithyajay@outlook.com,7045169994,4/13/2019,Minnesota Gamma,Minnesota Gamma,"115 2ND AVE S, APT #1111",MINNEAPOLIS,Minnesota,55401
+0036A00000tpD07QAE,Jayanth,Jay,Jayavardhanan,Alumnus,adithyajay@outlook.com,7045169994,4/13/2019,Minnesota Gamma,Minnesota Gamma,115 2ND AVE S APT #1111,MINNEAPOLIS,Minnesota,55401
 0036A00000YebMzQAJ,Brad,Brad,Evans,Alumnus,baevans88@gmail.com,952-412-5109,4/11/2007,Indiana Zeta,Indiana Zeta,401 SE Main St Apt 5013,Minneapolis,Minnesota,55414-4613
 0036A00000YeeyuQAB,Patrick,Pat,Mcgonagill,Alumnus,mcgo0120@umn.edu,612-940-2665,11/15/2013,Minnesota Beta,Minnesota Beta,501 SE MAIN ST APT 504,MINNEAPOLIS,Minnesota,55414-2973
-0036A00000YeczaQAB,Brent,Brent,Seaberg,Alumnus,brentmseaberg@gmail.com,612-791-0415,3/10/2011,Minnesota Beta,Minnesota Beta,"222 Hennepin Ave, APT 614",Minneapolis,Minnesota,55401
+0036A00000YeczaQAB,Brent,Brent,Seaberg,Alumnus,brentmseaberg@gmail.com,612-791-0415,3/10/2011,Minnesota Beta,Minnesota Beta,222 Hennepin Ave APT 614,Minneapolis,Minnesota,55401
 0036A00000YeaWYQAZ,Alex,Alex,Schned,Alumnus,mollycschned@gmail.com,,4/25/2008,California Mu,California Mu,101 Main St NE Ste 5,Minneapolis,Minnesota,55413-4502
 0036A00000YeY8OQAV,Andrew,Andrew,Dommer,Alumnus,domm0006@umn.edu,218-310-4399,4/27/2002,Minnesota Delta,Minnesota Delta,20 Grove St Apt 60,Minneapolis,Minnesota,55401-1592
 0036A00000YeKaeQAF,Eric,Eric,Nelson,Alumnus,,,3/17/1974,Tennessee Delta,Tennessee Delta,500 8th Ave. SE,Minneapolis,Minnesota,55414
@@ -120,7 +120,7 @@ Salesforce ID,Legal First Name,Preferred First Name,Legal Last Name,Undergraduat
 0036A00000YebkTQAR,Braddon,Braddon,Olson,Alumnus,,715-235-5516,11/5/2007,Minnesota Beta,Minnesota Beta,1634 Marshall Ave Apt 2,Saint Paul,Minnesota,55104-8619
 0036A00000YebEUQAZ,Nicholas,Nicholas,Chepeus,Alumnus,nchepeus@gmail.com,763-476-8323,11/18/2006,Minnesota Gamma,Minnesota Gamma,14310 44TH AVE N,MINNEAPOLIS,Minnesota,55446-2767
 0036A00000YeSOEQA3,Christopher,Christopher,Smith,Alumnus,chris_smith@acushnetgolf.com,612-822-2374,1/24/1987,Illinois Delta,Illinois Delta,5225 Clinton Ave.,Minneapolis,Minnesota,55419-1425
-0036A00000YeHwVQAV,Ian,Ian,MacTavish,Alumnus,imactavish@hotmail.com,612-588-7449,1/1/1966,Minnesota Beta,Minnesota Beta,"4110 Washburn, N., Ave.",Minneapolis,Minnesota,55412
+0036A00000YeHwVQAV,Ian,Ian,MacTavish,Alumnus,imactavish@hotmail.com,612-588-7449,1/1/1966,Minnesota Beta,Minnesota Beta,4110 Washburn N. Ave.,Minneapolis,Minnesota,55412
 0036A00000YeSbGQAV,Mark,Mark,Thomas,Alumnus,,,4/4/1987,Minnesota Beta,Minnesota Beta,5057 Lyndale Ave S Apt 2,Minneapolis,Minnesota,55419-1276
 0036A00000YeguvQAB,Alexander,Alex,May,Alumnus,mayxx383@umn.edu,612-518-6263,4/9/2016,Minnesota Beta,Minnesota Beta,1989 Juliet Ave,Saint Paul,Minnesota,55105
 0036A00000YeBj5QAF,B.,Tom,Boese,Alumnus,,765-653-5606,3/14/1965,Indiana Alpha,Indiana Alpha,5209 Woodlawn Boulevard,Minneapolis,Minnesota,55417-1943
@@ -235,7 +235,7 @@ Salesforce ID,Legal First Name,Preferred First Name,Legal Last Name,Undergraduat
 0036A00000YeXzAQAV,Seth,Seth,Brandjord,Alumnus,yugolord@hotmail.com,,1/27/2002,Indiana Gamma,Indiana Gamma,6025 Penn Ave S,Minneapolis,Minnesota,55419-2032
 0036A00000YeJ4FQAV,Dale,Dale,Hanson,Alumnus,,,3/24/1962,Nebraska Alpha,Minnesota Beta,1231 Watson Ave,St Paul,Minnesota,55116
 0036A00000YeY30QAF,Lance,Lance,Fischer,Alumnus,lancedfischer@gmail.com,612-730-1434,12/7/2001,Minnesota Beta,Minnesota Beta,1894 WORCESTER AVE,SAINT PAUL,Minnesota,55116-2627
-0036A00000YeIQdQAN,Charles,Charles,Hinz,Alumnus,,612-861-1974,1/1/1956,Minnesota Beta,Minnesota Beta,"6111 Logan Ave., S.",Minneapolis,Minnesota,55419
+0036A00000YeIQdQAN,Charles,Charles,Hinz,Alumnus,,612-861-1974,1/1/1956,Minnesota Beta,Minnesota Beta,6111 Logan Ave. S.,Minneapolis,Minnesota,55419
 0036A00000Yeb3LQAR,John,John,Quimby,Alumnus,john-quimby@uiowa.edu,612-741-1237,1/20/2007,Iowa Alpha,Iowa Alpha,5824 Abbott Ave. S,Edina,Minnesota,55410-2810
 0036A00000YeUbKQAV,Tyler,Tyler,Penniman,Alumnus,tylerpenniman@hotmail.com,,9/1/1991,Iowa Alpha,Iowa Alpha,1282 Highland Pkwy,Saint Paul,Minnesota,55116-2212
 0036A00000YeS8KQAV,David,David,Liebl,Alumnus,,952-927-7953,1/8/1983,Minnesota Beta,Minnesota Beta,5536 Park Pl,Edina,Minnesota,55424-1644
@@ -282,7 +282,7 @@ Salesforce ID,Legal First Name,Preferred First Name,Legal Last Name,Undergraduat
 0036A00000YeeytQAB,Christian,Christian,Hoops,Alumnus,hoops014@umn.edu,952-465-2495,11/15/2013,Minnesota Beta,Minnesota Beta,5108 Mirror Lakes Drive,Edina,Minnesota,55436
 0036A00000YeaeTQAR,Daniel,Daniel,Sullivan,Alumnus,,651-489-8462,11/11/2005,Illinois Zeta,Illinois Zeta,925 W Hoyt Ave,St. Paul,Minnesota,55117
 0036A00000YeQgmQAF,Joseph,Joseph,Heinecke,Alumnus,jeheinecke@yahoo.com,907-863-8193,12/3/1977,Minnesota Gamma,Minnesota Gamma,4800 Louisiana Ave N,Minneapolis,Minnesota,55428-4634
-0036A00000YeIRvQAN,Robert,Robert,Alexander,Alumnus,balexander@selectcomm.net,612-720-1450,1/1/1962,Minnesota Beta,Minnesota Beta,"8309 39th Ave., N.",Minneapolis,Minnesota,55427
+0036A00000YeIRvQAN,Robert,Robert,Alexander,Alumnus,balexander@selectcomm.net,612-720-1450,1/1/1962,Minnesota Beta,Minnesota Beta,8309 39th Ave. N.,Minneapolis,Minnesota,55427
 0036A00000YeeUyQAJ,Christian,Christian,Anton,Alumnus,canton31@gmail.com,952-201-0120,2/16/2014,California Lambda,California Lambda,5133 MIRROR LAKES DR,MINNEAPOLIS,Minnesota,55436-1341
 0036A00000YeGIPQA3,Gregory,Gregory,Beilman,Alumnus,,612-869-7754,4/26/1978,Maryland Alpha,Maryland Alpha,7068 Oak Grove Boulevard,Minneapolis,Minnesota,55423-3039
 0036A00000YeHcQQAV,Jeffrey,Jeffrey,Anderson,Alumnus,,,1/1/1969,New York Epsilon,New York Epsilon,6566 France Ave S Ph 3,Minneapolis,Minnesota,55435-1745
@@ -470,7 +470,7 @@ Salesforce ID,Legal First Name,Preferred First Name,Legal Last Name,Undergraduat
 0036A00000YeSbEQAV,Paul,Paul,Livermore,Alumnus,pslivermore@yahoo.com,763-425-8238,1/10/1987,Minnesota Beta,Minnesota Beta,352 W. Eagle Lake Dr.,Maple Grove,Minnesota,55369-5552
 0036A00000YeaLYQAZ,Christopher,Christopher,Nigbor,Alumnus,,262 893-2684,11/24/2006,Minnesota Beta,Minnesota Beta,8626 Dunkirk Ct Ne,Minneapolis,Minnesota,55449-6790
 0036A00000YedwoQAB,Ryan,Ryan,Hoium,Alumnus,hoium038@d.umn.edu,651-398-6141,12/3/2011,Minnesota Delta,Minnesota Delta,5823 Ridge Creek Rd,Shoreview,Minnesota,55126
-0036A00000YePxNQAV,Mark,Mark,McCourtney,Alumnus,mccourtney5@msn.com,612-464-8700,4/18/1980,Nebraska Beta,Nebraska Beta,"14435 43rd Ave., N.",Plymouth,Minnesota,55446-2701
+0036A00000YePxNQAV,Mark,Mark,McCourtney,Alumnus,mccourtney5@msn.com,612-464-8700,4/18/1980,Nebraska Beta,Nebraska Beta,14435 43rd Ave. N.,Plymouth,Minnesota,55446-2701
 0036A00000YeTf6QAF,Todd,Todd,Jennings,Alumnus,,612-925-4746,9/26/1987,Minnesota Beta,Minnesota Beta,233 Salem Church Rd.,Sunfish Lake,Minnesota,55118-4742
 0036A00000YegZ8QAJ,Aaron,Aaron,Carlson,Alumnus,carl4743@umn.edu,612-559-9723,12/4/2014,Minnesota Beta,Minnesota Beta,15625 2nd Ave. N,Plymouth,Minnesota,55447
 0036A00000YeVkNQAV,John,John,Meier,Alumnus,johnnyfulcrum@yahoo.com,952-465-4739,11/27/1991,Nebraska Beta,Nebraska Beta,8729 Walton Oaks Dr.,Bloomington,Minnesota,55438
@@ -549,7 +549,7 @@ Salesforce ID,Legal First Name,Preferred First Name,Legal Last Name,Undergraduat
 0036A00000YeZRdQAN,Christopher,Christopher,Dillon,Alumnus,,763-473-0914,3/15/2002,Nebraska Beta,Nebraska Beta,17915 18th Circle North,Plymouth,Minnesota,55447
 0036A00000YeHy1QAF,Dale,Dale,Dissmeyer,Alumnus,,612-941-1440,1/25/1976,Minnesota Beta,Minnesota Beta,77 E Pleasant Lake Rd,Saint Paul,Minnesota,55127-6305
 0036A00000YebJMQAZ,Ariel,Ariel,Prozumenshikov,Alumnus,aproz@gwu.edu,952-476-5911,4/26/2008,District of Columbia Alpha,District of Columbia Alpha,3302 Breconwood Circle,Wayzata,Minnesota,55391
-0036A00000YeHn6QAF,David,David,Darrell,Alumnus,,,1/1/1947,Minnesota Beta,Minnesota Beta,"8501 Flying Cloud Dr, #A204",Eden Prairie,Minnesota,55116
+0036A00000YeHn6QAF,David,David,Darrell,Alumnus,,,1/1/1947,Minnesota Beta,Minnesota Beta,8501 Flying Cloud Dr #A204,Eden Prairie,Minnesota,55116
 0036A00000YeY2yQAF,Steven,Steven,Silvers,Alumnus,ssilvers21@yahoo.com,612-202-8114,12/7/2001,Minnesota Beta,Minnesota Beta,16070 54TH AVE N,MINNEAPOLIS,Minnesota,55446-3770
 0036A00000YeVlmQAF,Chanthabounkeo,Chanthabounkeo,Sengsavang,Alumnus,asianpr@yahoo.com,,4/3/1992,Minnesota Beta,Minnesota Beta,4361 Bear Path Trl,Saint Paul,Minnesota,55122-2218
 0036A00000YeidqQAB,Traivon,TRUE,Fitzpatrick,Alumnus,,651-206-2121,11/19/2017,Ohio Theta,Ohio Theta,2200 mitchell ave,saint paul,Minnesota,55119
@@ -592,7 +592,7 @@ Salesforce ID,Legal First Name,Preferred First Name,Legal Last Name,Undergraduat
 0036A00000YeHyYQAV,Dave,Dave,Wilson,Alumnus,,763-786-8860,5/20/1978,Minnesota Beta,Minnesota Beta,21 Hillcrest Lane,Circle Pines,Minnesota,55014
 0036A00000YeYlxQAF,Brandon,Brandon,Brouillette,Alumnus,sherrybrouillette2003@yahoo.com,763-559-6927,3/1/2003,California Delta,California Delta,5105 Holly Ln N Unit 4,Plymouth,Minnesota,55446-1823
 0036A00000emwJ2QAI,Benjamin,Benjamin,Basile,Alumnus,basil023@d.umn.edu,952-820-5954,10/20/2018,Minnesota Delta,Minnesota Delta,9378 Olympia Drive,Eden Prairie,Minnesota,55347
-0036A00000YePSNQA3,Kenyon,Kenyon,Latham,Alumnus,,651-735-4536,1/1/1960,Missouri Beta,Missouri Beta,"2524 Rose Ave., E.",St. Paul,Minnesota,55119
+0036A00000YePSNQA3,Kenyon,Kenyon,Latham,Alumnus,,651-735-4536,1/1/1960,Missouri Beta,Missouri Beta,2524 Rose Ave. E.,St. Paul,Minnesota,55119
 0036A00000Yeh5HQAR,Eric,Eric,Benjamin,Alumnus,eric.mbenjamin@yahoo.com,952-426-5260,11/21/2015,Minnesota Gamma,Minnesota Gamma,15841 Hillcrest Ct N,Eden Prairie,Minnesota,55346
 0036A00000YedlpQAB,Ryan,Ryan,Dickey,Alumnus,dicke231@umn.edu,763-568-3988,4/28/2012,Minnesota Beta,Minnesota Beta,12249 87th Ave N.,Maple Grove,Minnesota,55369
 0036A00000YeZQQQA3,John,John,Maresh,Alumnus,johnmaresh@gmail.com,312-533-8614,2/1/2003,Kansas Alpha,Kansas Alpha,124 EDGEWOOD CT,WAYZATA,Minnesota,55391-1063
@@ -980,7 +980,7 @@ Salesforce ID,Legal First Name,Preferred First Name,Legal Last Name,Undergraduat
 0036A00000YeUg7QAF,Robert,Robert,Blankmeyer,Alumnus,rblankmeyer@pcl.com,760-579-1555,5/30/1992,California Eta,California Eta,2195 165th St NW,Shakopee,Minnesota,55379-9196
 0036A00000YeCiiQAF,George,George,Hof,Alumnus,,651-439-7604,3/27/1955,Iowa Alpha,Iowa Alpha,1180 Lecuyer Circle,Stillwater,Minnesota,55082
 0036A00000Yee2yQAB,Joshua,Josh,Brandt,Alumnus,joshua.brandt@mnsu.edu,612-210-2431,12/1/2012,Minnesota Gamma,Minnesota Gamma,17249 Urbank st,Ham Lake,Minnesota,55304
-0036A00000YeIi4QAF,Michael,Michael,Blood,Alumnus,,952-679-4117,5/26/1979,Minnesota Beta,Minnesota Beta,"1776 Steiger Lake Ln, #211",Victoria,Minnesota,55386
+0036A00000YeIi4QAF,Michael,Michael,Blood,Alumnus,,952-679-4117,5/26/1979,Minnesota Beta,Minnesota Beta,1776 Steiger Lake Ln #211,Victoria,Minnesota,55386
 0036A00000YeQhDQAV,Brian,Brian,Carlson,Alumnus,brian.carlson@gmail.com,952-479-7288,1/8/1983,Minnesota Gamma,Minnesota Gamma,2861 Mark Twain Drive,Chaska,Minnesota,55318
 0036A00000YebkSQAR,Ross,Ross,Koch,Alumnus,,651-587-9809,11/5/2007,Minnesota Beta,Minnesota Beta,12530 103rd St. N.,Stillwater,Minnesota,55082-8463
 0036A00000YehnsQAB,Brandon,Brandon,Cecchettini,Alumnus,cecchettini1@gmail.com,651-742-8045,4/22/2017,Minnesota Gamma,Minnesota Gamma,19353 Everest Path,Farmington,Minnesota,55024
