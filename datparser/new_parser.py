@@ -82,7 +82,6 @@ def main():
     }
 
     xml_foundation_dict = {}
-
     for file_name, csv in from_foundation.items():
         xml_foundation_dict[file_name] = csv_to_xml(csv)
 
