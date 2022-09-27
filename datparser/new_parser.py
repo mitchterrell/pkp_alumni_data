@@ -16,6 +16,65 @@ def name_to_xml(first, last):
         return None
 
 
+def add_num_or_update_source(xml_in, cell_in, num_type, source_name):
+    xml_out = xml_in.find(f"./phone_numbers/phone[@number = '{cell_in}']")
+    if xml_out != None:
+        cur_sorce = xml_out.get("source")
+        xml_out.set("source", f"{cur_sorce};{source_name}")
+    else:
+        p_numbs = xml_in.find("phone_numbers")
+        if p_numbs == None:
+            p_numbs = ET.SubElement(xml_in, "phone_numbers")
+
+        ET.SubElement(
+            p_numbs,
+            "phone",
+            {"type": num_type, "number": cell_in, "source": source_name},
+        )
+
+
+def add_email_or_update_source(xml_in, email_in, source_name):
+    xml_out = xml_in.find(f"./emails/email[@address = '{email_in}']")
+    if xml_out != None:
+        cur_sorce = xml_out.get("source")
+        xml_out.set("source", f"{cur_sorce};{source_name}")
+    else:
+        p_numbs = xml_in.find("emails")
+        if p_numbs == None:
+            p_numbs = ET.SubElement(xml_in, "emails")
+
+        ET.SubElement(
+            p_numbs,
+            "email",
+            {"address": email_in, "source": source_name},
+        )
+
+
+def add_addr_or_update_source(
+    xml_in, street_in, city_in, state_in, zip_in, source_name
+):
+    xml_out = xml_in.find(f"./mailing_addresses/address[@street = '{street_in}']")
+    if xml_out != None:
+        cur_sorce = xml_out.get("source")
+        xml_out.set("source", f"{cur_sorce};{source_name}")
+    else:
+        p_numbs = xml_in.find("mailing_addresses")
+        if p_numbs == None:
+            p_numbs = ET.SubElement(xml_in, "mailing_addresses")
+
+        ET.SubElement(
+            p_numbs,
+            "address",
+            {
+                "street": street_in,
+                "city": city_in,
+                "state": state_in,
+                "zip": zip_in,
+                "source": source_name,
+            },
+        )
+
+
 def get_headers(xml, file_name, do_print=False):
     headers_out = [x.get("name") for x in xml.findall("./headers/head")]
     if do_print:
@@ -180,6 +239,7 @@ def parse_foundation():
 
 
 def add_misc_data(assimilated):
+    source_name = "focus_group"
 
     with open(
         R".\raw_inputs\pennington_feasibility\cleaned_up\misc_data.csv", "r"
@@ -204,16 +264,27 @@ def add_misc_data(assimilated):
                 print(f"ERROR {unique} not in anything")
             else:
                 tmp_xml = ET.SubElement(xml, "focus_group")
+
+                # (a) Add era
                 tmp_xml.set("era", era)
+
+                # (b) Add cell if not in list or add another source
                 if cell:
-                    tmp_xml.set("cell", fix_cell(cell))
+                    cell = fix_cell(cell)
+                    add_num_or_update_source(xml, cell, "unknown", source_name)
+
+                # (c) Add email if not in list or add another source
                 if email:
-                    tmp_xml.set("email", email.lower())
+                    email = email.lower()
+                    add_email_or_update_source(xml, email, source_name)
+
+                # (d) Add contact infomration if it was there
                 if contact:
                     tmp_xml.set("contact", contact)
 
 
-def add_penn_focs_group(assimilated):
+def add_penn_focus_group(assimilated):
+    source_name = "penn_focus_group"
     with open(
         R".\raw_inputs\pennington_feasibility\pennington_focus_group.csv", "r"
     ) as penn_focus:
@@ -225,17 +296,20 @@ def add_penn_focs_group(assimilated):
             if xml_attr == None:
                 print(f"ERROR {splitter[0]} not in alumni dat")
             else:
-                temp_xml = ET.SubElement(xml_attr, "penn_focus_group")
+                temp_xml = ET.SubElement(xml_attr, source_name)
                 temp_xml.set("era", splitter[1])
                 temp_xml.set("committee", splitter[2])
-                temp_xml.set("email", splitter[3].lower())
-                temp_xml.set("phone", fix_cell(splitter[4]))
+                add_email_or_update_source(xml_attr, splitter[3].lower(), source_name)
+                add_num_or_update_source(
+                    xml_attr, fix_cell(splitter[4]), "unknown", source_name
+                )
                 temp_xml.set("confirmed", splitter[5])
                 temp_xml.set("call_segment", splitter[6])
                 temp_xml.set("response", splitter[7])
 
 
 def add_penn_eras(assimilated):
+    source_name = "penn_era"
     with open(
         R".\raw_inputs\pennington_feasibility\pennington_eras.csv", "r"
     ) as penn_eras:
@@ -247,7 +321,7 @@ def add_penn_eras(assimilated):
             if xml_attr == None:
                 print(f"ERROR {splitter[1]} not in alumni dat")
             else:
-                temp_xml = ET.SubElement(xml_attr, "penn_era")
+                temp_xml = ET.SubElement(xml_attr, source_name)
                 temp_xml.set("initiation", splitter[0])
                 temp_xml.set("who", splitter[4])
                 temp_xml.set("prospect_list", splitter[6])
@@ -256,6 +330,7 @@ def add_penn_eras(assimilated):
 
 
 def add_penn_contact(assimilated):
+    source_name = "penn_contact"
     with open(
         R".\raw_inputs\pennington_feasibility\pennington_contact_list.csv", "r"
     ) as penn_contact:
@@ -271,41 +346,79 @@ def add_penn_contact(assimilated):
             if xml_attr == None:
                 print(f"ERROR {splitter[0]} not in alumni dat")
             else:
-                temp_xml = ET.SubElement(xml_attr, "penn_contact")
-
-                phone_labels = [
-                    "preferred_phone_number",
-                    "phone",
-                    "home_phone",
-                    "work_phone",
-                ]
-                numbers = []
-                for pl in phone_labels:
-                    numbers.append(xml_attr.get(pl))
+                temp_xml = ET.SubElement(xml_attr, source_name)
 
                 mobile = fix_cell(splitter[4])
                 home = fix_cell(splitter[5])
                 biznus = fix_cell(splitter[6])
-
-                if mobile and mobile not in numbers:
-                    temp_xml.set("mobile_phone", mobile)
-                if home and home not in numbers:
-                    temp_xml.set("home_phone", home)
-                if biznus and biznus not in numbers:
-                    temp_xml.set("biznus_phone", biznus)
+                if mobile:
+                    add_num_or_update_source(xml_attr, mobile, "mobile", source_name)
+                if home:
+                    add_num_or_update_source(xml_attr, home, "home", source_name)
+                if biznus:
+                    add_num_or_update_source(xml_attr, biznus, "buissness", source_name)
 
                 temp_xml.set("pref_year", splitter[3])
 
-                tmp_email = splitter[7].lower()
-                if tmp_email and tmp_email != temp_xml.get("email"):
-                    temp_xml.set("email", tmp_email)
+                temp_email = splitter[7].lower()
+                if temp_email:
+                    add_email_or_update_source(xml_attr, temp_email, source_name)
 
                 tmp_address = splitter[8]
                 if tmp_address and tmp_address != temp_xml.get("primary_street"):
-                    temp_xml.set("primary_street", tmp_address)
-                    temp_xml.set("primary_city", splitter[9])
-                    temp_xml.set("primary_state_province", splitter[10])
-                    temp_xml.set("primary_zip_postal_code", splitter[11])
+                    street = tmp_address
+                    city = splitter[9]
+                    state = splitter[10]
+                    zip = splitter[11]
+                    add_addr_or_update_source(
+                        xml_attr, street, city, state, zip, source_name
+                    )
+
+
+def add_penn_call_status(assimilated):
+    source_name = "penn_call_status"
+    with open(
+        R".\raw_inputs\pennington_feasibility\pennington_call_status.csv", "r"
+    ) as penn_contact:
+        for line in penn_contact.readlines()[1:]:
+            line = line.replace("\n", "")
+            splitter = line.split(",")
+            xml_attr = name_to_xml(splitter[2], splitter[3])
+
+            if xml_attr == None:
+                print(f"ERROR {splitter[2]} {splitter[3]} not in alumni dat")
+            else:
+                temp_xml = ET.SubElement(xml_attr, source_name)
+
+                temp_xml.set("status", splitter[0])
+
+                street = splitter[4]
+                city = splitter[5]
+                state = splitter[6]
+                zip = splitter[7]
+                add_addr_or_update_source(
+                    xml_attr, street, city, state, zip, source_name
+                )
+
+                home = fix_cell(splitter[8])
+                cell = fix_cell(splitter[9])
+                biznus = fix_cell(splitter[10])
+                if home:
+                    add_num_or_update_source(xml_attr, home, "home", source_name)
+                if cell:
+                    add_num_or_update_source(xml_attr, cell, "cell", source_name)
+                if biznus:
+                    add_num_or_update_source(xml_attr, biznus, "biznus", source_name)
+
+                email = splitter[11].lower()
+                if email:
+                    add_email_or_update_source(xml_attr, email, source_name)
+
+                if splitter[12]:
+                    temp_xml.set("contactor", splitter[12])
+
+                if splitter[13]:
+                    temp_xml.set("comment_str", splitter[13])
 
 
 def perform_corrections(foundation_xml):
@@ -318,18 +431,92 @@ def perform_corrections(foundation_xml):
     sfid_dict["0036A00000YebkQQAR"].set("preferred_first_name", "Pete")
     sfid_dict["0036A00000YeY31QAF"].set("preferred_first_name", "Josh")
     sfid_dict["0036A00000YeXbmQAF"].set("preferred_first_name", "Andy")
+    sfid_dict["0036A00000YeIi9QAF"].set("preferred_first_name", "Mike")
+    sfid_dict["0036A00000YeIiDQAV"].set("preferred_first_name", "Mike")
+    sfid_dict["0036A00000YeVweQAF"].set("preferred_first_name", "Ro")
+    sfid_dict["0036A00000YeIRvQAN"].set("preferred_first_name", "Bob")
+    sfid_dict["0036A00000YeHwTQAV"].set("preferred_first_name", "Ted")
+    sfid_dict["0036A00000YeY6HQAV"].set("preferred_first_name", "Tim")
+    sfid_dict["0036A00000YeY2yQAF"].set("preferred_first_name", "Steve")
+    sfid_dict["0036A00000YeIigQAF"].set("preferred_first_name", "Bill")
 
-    # Fix all phone numbers:
+    # Fix all phone numbers and add as a child element:
     phone_labels = ["preferred_phone_number", "phone", "home_phone", "work_phone"]
     for phone_label in phone_labels:
         for elem in foundation_xml.xpath(f"./alumni[@{phone_label}]"):
+            # (a) Extract the number
             temp_phone = fix_cell(elem.get(phone_label))
-            elem.set(phone_label, temp_phone)
+
+            # (b) Find or create the phone_numbers child element
+            phone_xml = elem.find("phone_numbers")
+            if phone_xml == None:
+                phone_xml = ET.SubElement(elem, "phone_numbers")
+
+            # (c) Add the number to the phone_numbers child element
+            ET.SubElement(
+                phone_xml,
+                "phone",
+                {"type": phone_label, "number": temp_phone, "source": "foundation"},
+            )
+
+            # (d) Delete the number as an attribute
+            del elem.attrib[phone_label]
 
     # Fix all emails
     for elem in foundation_xml.xpath(f"./alumni[@email]"):
+        # (a) Extract the email and force it to lower case
         temp_email = elem.get("email").lower()
-        elem.set("email", temp_email)
+
+        # (b) Find or create the emails child element
+        email_xml = elem.find("emails")
+        if email_xml == None:
+            email_xml = ET.SubElement(elem, "emails")
+
+        # (c) Add the email to the emails child element
+        ET.SubElement(
+            email_xml,
+            "email",
+            {"address": temp_email, "source": "foundation"},
+        )
+
+        # (d) Delete the number as an attribute
+        del elem.attrib["email"]
+
+    # Fix addresses
+    for elem in foundation_xml.xpath(f"./alumni[@primary_street]"):
+        # (a) Extract the address
+        street = elem.get("primary_street", "Unkown")
+        city = elem.get("primary_city", "Unkown")
+        state = elem.get("primary_state_province", "Unkown")
+        zip = elem.get("primary_zip_postal_code", "Unkown")
+
+        # (b) Find or create the addresses child element
+        mail_xml = elem.find("mailing_addresses")
+        if mail_xml == None:
+            mail_xml = ET.SubElement(elem, "mailing_addresses")
+
+        # (c) Add the mailling address
+        ET.SubElement(
+            mail_xml,
+            "address",
+            {
+                "street": street,
+                "city": city,
+                "state": state,
+                "zip": zip,
+                "source": "foundation",
+            },
+        )
+
+        # (d) Delete the mailing information attributes
+        if street != "Unkown":
+            del elem.attrib["primary_street"]
+        if city != "Unkown":
+            del elem.attrib["primary_city"]
+        if state != "Unkown":
+            del elem.attrib["primary_state_province"]
+        if zip != "Unkown":
+            del elem.attrib["primary_zip_postal_code"]
 
 
 def main():
@@ -341,9 +528,10 @@ def main():
     set_dicts(foundation_xml)
 
     add_misc_data(foundation_xml)
-    add_penn_focs_group(foundation_xml)
+    add_penn_focus_group(foundation_xml)
     add_penn_eras(foundation_xml)
     add_penn_contact(foundation_xml)
+    add_penn_call_status(foundation_xml)
 
     xml_to_file(
         foundation_xml, os.path.join("new_output", "assimilated_foundation.xml")
