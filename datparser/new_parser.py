@@ -678,8 +678,53 @@ def perform_corrections(foundation_xml):
             del elem.attrib["primary_zip_postal_code"]
 
 
+def percentage_to_str(num, denom):
+    return f"{(num/denom)*100:.2f}%"
+
+
+def get_stats(xml_path):
+
+    tree = ET.parse(xml_path)
+    root = tree.getroot()
+
+    num_alumni = len(root.findall("alumni"))
+    alive_alumni = root.xpath("./alumni[not(@deceased)]")
+    num_alive_alumni = len(alive_alumni)
+    mn_beta_alumni = len(
+        root.xpath("./alumni[not(@deceased) and @mn_beta_alumni_list]")
+    )
+    tcaa_alumn = len(
+        root.xpath("./alumni[not(@deceased) and @twin_cities_alumni_list]")
+    )
+    mn_gam_delt_alumn = len(
+        root.xpath("./alumni[not(@deceased) and @mn_gamm_mn_delta_2022]")
+    )
+
+    print(f"{'Total Alumni in DB:':<20} {num_alumni:>4}")
+
+    print(
+        f"{'Alive Alumni:':<20} {num_alive_alumni:>4} - {percentage_to_str(num_alive_alumni,num_alumni)}"
+    )
+    print("\n== All Subsequent Stats are for Alive Alumni Only ==\n")
+
+    print(
+        f"{'MN Beta Alumni:':<20} {mn_beta_alumni:>4} - {percentage_to_str(mn_beta_alumni,num_alive_alumni):>4}"
+    )
+    print(
+        f"{'TCAA Alumni:':<20} {tcaa_alumn:>4} - {percentage_to_str(tcaa_alumn,num_alive_alumni):>4}"
+    )
+    print(
+        f"{'MN Gam/Delt Alumni:':<20} {mn_gam_delt_alumn:>4} - {percentage_to_str(mn_gam_delt_alumn,num_alive_alumni):>4}"
+    )
+
+
 def main():
     print("=== Starting PKP Alumni Data Parsing ===")
+
+    xml_path = os.path.join("new_output", "assimilated_foundation.xml")
+
+    get_stats(xml_path)
+    return
 
     foundation_xml = parse_foundation()
     set_dicts(foundation_xml)
@@ -694,9 +739,7 @@ def main():
     add_penn_feasability(foundation_xml)
     add_facebook_list(foundation_xml)
 
-    xml_to_file(
-        foundation_xml, os.path.join("new_output", "assimilated_foundation.xml")
-    )
+    xml_to_file(foundation_xml, xml_path)
 
 
 if __name__ == "__main__":
