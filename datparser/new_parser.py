@@ -421,6 +421,90 @@ def add_penn_call_status(assimilated):
                     temp_xml.set("comment_str", splitter[13])
 
 
+def add_facebook_list(assimilated):
+    fb_name_dict = {
+        x.find("facebook").get("name"): x
+        for x in assimilated.xpath("./alumni[./facebook]")
+    }
+
+    source_name = "facebook"
+    with open(R".\raw_inputs\misc\facebook_list_04_01_22.csv", "r") as fb_list:
+        for line in fb_list.readlines()[1:]:
+            line = line.replace("\n", "").replace('"', "")
+            splitter = line.split(",")
+            xml_attr = fb_name_dict.get(splitter[0], None)
+
+            if xml_attr == None:
+                xml_attr = name_to_xml(
+                    splitter[0].split(" ")[0], " ".join(splitter[0].split(" ")[1:])
+                )
+            if xml_attr == None and len(splitter[0].split(" ")) > 2:
+                xml_attr = name_to_xml(
+                    splitter[0].split(" ")[0], splitter[0].split(" ")[-1]
+                )
+            if xml_attr == None:
+                xml_attr = name_to_xml(
+                    splitter[0].split(" ")[0], splitter[0].split(" ")[1]
+                )
+
+            if xml_attr == None:
+                print(f"ERROR {splitter[0]} not in alumni dat")
+            else:
+                do_noting = 1
+                # temp_xml = ET.SubElement(xml_attr, source_name)
+
+
+def add_penn_feasability(assimilated):
+    source_name = "penn_feasability"
+    with open(
+        R".\raw_inputs\pennington_feasibility\penngington_feasibility_study.csv", "r"
+    ) as penn_contact:
+        for line in penn_contact.readlines()[1:]:
+            line = line.replace("\n", "")
+
+            splitter = line.split(",")
+            xml_attr = name_to_xml(splitter[8], splitter[10])
+
+            if xml_attr == None:
+                print(f"ERROR {splitter[8]} {splitter[10]} not in alumni dat")
+            else:
+                temp_xml = ET.SubElement(xml_attr, source_name)
+
+                if splitter[0] and splitter[0] != "-":
+                    temp_xml.set("pcfs_rank", splitter[0])
+                if splitter[1] and splitter[1] != "-":
+                    temp_xml.set("status", splitter[1])
+                if splitter[2] and splitter[2] != "-":
+                    temp_xml.set("interview_date", splitter[2])
+                if splitter[6] and splitter[6] != "-":
+                    temp_xml.set("pcfs_low", "$" + splitter[6])
+                else:
+                    temp_xml.set("pcfs_low", "NA")
+                if splitter[7] and splitter[7] != "-":
+                    temp_xml.set("pcfs_high", "$" + splitter[7])
+                else:
+                    temp_xml.set("pcfs_high", "NA")
+
+                street = splitter[11]
+                city = splitter[12]
+                state = splitter[13]
+                zip = splitter[14]
+                add_addr_or_update_source(
+                    xml_attr, street, city, state, zip, source_name
+                )
+
+                home = fix_cell(splitter[15])
+                if home:
+                    add_num_or_update_source(xml_attr, home, "home", source_name)
+                mobile = fix_cell(splitter[16])
+                if mobile:
+                    add_num_or_update_source(xml_attr, mobile, "mobile", source_name)
+
+                email = splitter[17]
+                if email and email != "-":
+                    add_email_or_update_source(xml_attr, email, source_name)
+
+
 def perform_corrections(foundation_xml):
     sfid_dict["0036A00000YeHoyQAF"].set("preferred_first_name", "Andy")
     sfid_dict["0036A00000YeHydQAF"].set("preferred_first_name", "Randy")
@@ -439,6 +523,81 @@ def perform_corrections(foundation_xml):
     sfid_dict["0036A00000YeY6HQAV"].set("preferred_first_name", "Tim")
     sfid_dict["0036A00000YeY2yQAF"].set("preferred_first_name", "Steve")
     sfid_dict["0036A00000YeIigQAF"].set("preferred_first_name", "Bill")
+    sfid_dict["0036A00000YeZWEQA3"].set("preferred_first_name", "Ben")
+    sfid_dict["0036A00000dzULNQA2"].set("preferred_first_name", "Max")
+    sfid_dict["0033u00001QkIAMAA3"].set("legal_first_name", "Finnegan")
+    sfid_dict["0033u00001OEaHdAAL"].set("legal_first_name", "Thomas")
+    sfid_dict["0036A00000dzUM6QAM"].set("preferred_first_name", "Zach")
+    sfid_dict["0036A00000dzULhQAM"].set("preferred_first_name", "Ben")
+    sfid_dict["0033u00001aTKM7AAO"].set("preferred_first_name", "Benny")
+    sfid_dict["0033u000012E33UAAS"].set("preferred_first_name", "Luke")
+    sfid_dict["0033u000012E348AAC"].set("preferred_first_name", "Max")
+    sfid_dict["0033u000012E33PAAS"].set("preferred_first_name", "Will")
+    sfid_dict["0036A00000dzUMBQA2"].set("preferred_first_name", "Harry")
+    sfid_dict["0036A00000YeSFCQA3"].set("preferred_first_name", "Shane")
+    sfid_dict["0036A00000Yeg9eQAB"].set("preferred_first_name", "Bob")
+    sfid_dict["0036A00000Yehl9QAB"].set("preferred_first_name", "Phil")
+    sfid_dict["0036A00000YeTf5QAF"].set("preferred_first_name", "Chris")
+    sfid_dict["0036A00000dzUKjQAM"].set("preferred_first_name", "Luke")
+    sfid_dict["0036A00000Yeg9UQAR"].set("preferred_first_name", "Mark")
+    sfid_dict["0036A00000YeaoWQAR"].set("preferred_first_name", "Pete")
+    sfid_dict["0036A00000YeXbpQAF"].set("preferred_first_name", "Paul")
+    sfid_dict["0036A00000YeSb9QAF"].set("preferred_first_name", "Pat")
+    sfid_dict["0036A00000YeVleQAF"].set("preferred_first_name", "Geoff")
+    sfid_dict["0036A00000YeHxtQAF"].set("preferred_first_name", "Chuck")
+    sfid_dict["0036A00000YeaoZQAR"].set("preferred_first_name", "Jamie")
+    sfid_dict["0036A00000YebkEQAR"].set("preferred_first_name", "Danny")
+    sfid_dict["0036A00000Yeca2QAB"].set("preferred_first_name", "Ben")
+    sfid_dict["0036A00000YeTBOQA3"].set("preferred_first_name", "Mick")
+    sfid_dict["0036A00000YedloQAB"].set("preferred_first_name", "AJ")
+    sfid_dict["0036A00000YeHySQAV"].set("preferred_first_name", "Jeff")
+    sfid_dict["0036A00000YeWIUQA3"].set("preferred_first_name", "Chriss")
+    sfid_dict["0036A00000YeWcsQAF"].set("preferred_first_name", "Chucho")
+    sfid_dict["0036A00000YebkVQAR"].set("preferred_first_name", "Chris")
+    sfid_dict["0036A00000YebkFQAR"].set("preferred_first_name", "Alex")
+    sfid_dict["0036A00000YebkOQAR"].set("preferred_first_name", "Zack")
+    sfid_dict["0036A00000YeSb8QAF"].set("preferred_first_name", "Dan")
+    sfid_dict["0036A00000YeVlbQAF"].set("preferred_first_name", "Dave")
+    sfid_dict["0036A00000YebkMQAR"].set("preferred_first_name", "Nick")
+    sfid_dict["0036A00000YebkUQAR"].set("preferred_first_name", "Sam")
+    sfid_dict["0036A00000YeZGtQAN"].set("preferred_first_name", "TJ")
+    sfid_dict["0036A00000YeaLgQAJ"].set("preferred_first_name", "Tom")
+    sfid_dict["0036A00000YeaoYQAR"].set("preferred_first_name", "Luke")
+    sfid_dict["0036A00000YeXC8QAN"].set("preferred_first_name", "Matt")
+    sfid_dict["0036A00000YeaLfQAJ"].set("preferred_first_name", "Chad")
+    sfid_dict["0036A00000YeZWDQA3"].set("preferred_first_name", "Dave")
+    sfid_dict["0036A00000YealZQAR"].set("preferred_first_name", "TJ")
+    sfid_dict["0036A00000YeaLbQAJ"].set("preferred_first_name", "Alex")
+    sfid_dict["0036A00000YeZwTQAV"].set("preferred_first_name", "Matt")
+    sfid_dict["0036A00000YeYr9QAF"].set("preferred_first_name", "Ben")
+    sfid_dict["0036A00000YealVQAR"].set("preferred_first_name", "Josh")
+    sfid_dict["0036A00000YeX3iQAF"].set("preferred_first_name", "Jon")
+    sfid_dict["0036A00000YeYmNQAV"].set("preferred_first_name", "Mike")
+    sfid_dict["0036A00000YeaLYQAZ"].set("preferred_first_name", "Chris")
+    sfid_dict["0036A00000YeYrAQAV"].set("preferred_first_name", "Nick")
+
+    ## Add facebook names manually for some that are tricky
+    id_fb_name = {
+        "0033u00001QkIAHAA3": "Aaron Latterell",
+        "0033u000012E34XAAS": "Dylan Tripp Surprise",
+        "0036A00000YeePNQAZ": "Mimmy Turphy",
+        "0036A00000Yeez0QAB": "Joey Griffiths",
+        "0036A00000YeiDTQAZ": "David William Walker",
+        "0036A00000Yeez1QAB": "Andrew Hancock Turner",
+        "0036A00000YecZyQAJ": "Aaron Jay-Donald Cotton",
+        "0036A00000YeePSQAZ": "David Brink Watts",
+        "0036A00000YefKpQAJ": "Justin Nathan",
+        "0036A00000YegXwQAJ": "Luke Ashley",
+        "0036A00000YedgjQAB": "Andrew Dobin",
+        "0036A00000YegZ1QAJ": "Meir Avila",
+        "0036A00000YebkJQAR": "Ravi Kiran",
+        "0036A00000YeVljQAF": "Rick Licki",
+        "0036A00000YeYGuQAN": "Levon Esay",
+        "0036A00000YeYGsQAN": "Christian Wallace",
+        "0036A00000YegZDQAZ": "Ian Ni-kaza",
+    }
+    for id, fb_name in id_fb_name.items():
+        ET.SubElement(sfid_dict[id], "facebook", {"name": fb_name})
 
     # Fix all phone numbers and add as a child element:
     phone_labels = ["preferred_phone_number", "phone", "home_phone", "work_phone"]
@@ -532,6 +691,8 @@ def main():
     add_penn_eras(foundation_xml)
     add_penn_contact(foundation_xml)
     add_penn_call_status(foundation_xml)
+    add_penn_feasability(foundation_xml)
+    add_facebook_list(foundation_xml)
 
     xml_to_file(
         foundation_xml, os.path.join("new_output", "assimilated_foundation.xml")
