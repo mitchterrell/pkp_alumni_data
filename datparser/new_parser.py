@@ -5,6 +5,19 @@ sfid_dict = {}
 legal_name_dict = {}
 pref_name_dict = {}
 
+exception_list = {
+    "Peter Anderson": "Iowa Beta Alumn (2016 FD, 2016 TCAA)",
+    "Chris Reeck": "Seems legit, 2016, 2017 FD and TCAA",
+    "Chris Reeck": "Seems legit, 2016, 2017 FD and TCAA",
+    "Spencer Burke": "Ohio Iota chapter, 2018 grad",
+    "Adam Morgan": "PKP Foundation Guy",
+    "Mike Harrer": "Friends with Gabos... Not in Alumni Dat (2018 TCAA)",
+    "Tom Menzel": "No clue (2021 TCAA)",
+    "Tyler Tretter": "No clue (2021 TCAA) Duluth Guy",
+    "Aaron Fromm": "No clue (2021 TCAA) maybe undergrad",
+    "Joseph Hinkle": "No clue (2021 TCAA)",
+}
+
 
 def name_to_xml(first, last):
     unique = f"{first.lower()}_{last.lower()}"
@@ -73,6 +86,16 @@ def add_addr_or_update_source(
                 "source": source_name,
             },
         )
+
+
+def add_alt_name(xml_in, alt_name):
+    temp_xml = xml_in.find("alternate_names")
+    if temp_xml == None:
+        temp_xml = ET.SubElement(xml_in, "alternate_names")
+        ET.SubElement(temp_xml, "alt_name", {"name": alt_name})
+    else:
+        if alt_name not in [x.get("name") for x in temp_xml.findall("alt_name")]:
+            ET.SubElement(temp_xml, "alt_name", {"name": alt_name})
 
 
 def get_headers(xml, file_name, do_print=False):
@@ -217,7 +240,24 @@ def set_dicts(assimlated_xml):
     }
 
 
+def check_repeats(assimlated_xml):
+    found_names = {}
+    for x in assimlated_xml.xpath("./alumni"):
+        sfid = x.get("salesforce_id")
+        name = f"{x.get('legal_first_name').lower()}_{x.get('legal_last_name').lower()}"
+
+        if name in found_names:
+            print(f"Repeat Name: [{name}]")
+            found_names[name].append(sfid)
+            for val in found_names[name]:
+                print(f"    {val}")
+        else:
+            found_names[name] = []
+
+
 def parse_foundation():
+    print("=== Adding Foundation Baseline Data ===")
+
     from_foundation = {
         "mn_beta_all_time": R".\raw_inputs\from_foundation\2022\mn_beta_all_time_member_list.csv",
         "mn_beta_alumni_list": R".\raw_inputs\from_foundation\2022\mn_beta_alumni_list.csv",
@@ -239,6 +279,8 @@ def parse_foundation():
 
 
 def add_misc_data(assimilated):
+    print("=== Adding Focus Group Data ===")
+
     source_name = "focus_group"
 
     with open(
@@ -261,7 +303,7 @@ def add_misc_data(assimilated):
                 xml = pref_name_dict.get(unique, None)
 
             if xml == None:
-                print(f"ERROR {unique} not in anything")
+                print(f"    ERROR {unique} not in anything")
             else:
                 tmp_xml = ET.SubElement(xml, "focus_group")
 
@@ -284,6 +326,8 @@ def add_misc_data(assimilated):
 
 
 def add_penn_focus_group(assimilated):
+    print("=== Adding Penn Focus Group Data ===")
+
     source_name = "penn_focus_group"
     with open(
         R".\raw_inputs\pennington_feasibility\pennington_focus_group.csv", "r"
@@ -294,7 +338,7 @@ def add_penn_focus_group(assimilated):
             xml_attr = name_to_xml(splitter[0].split(" ")[0], splitter[0].split(" ")[1])
 
             if xml_attr == None:
-                print(f"ERROR {splitter[0]} not in alumni dat")
+                print(f"    ERROR {splitter[0]} not in alumni dat")
             else:
                 temp_xml = ET.SubElement(xml_attr, source_name)
                 temp_xml.set("era", splitter[1])
@@ -309,6 +353,8 @@ def add_penn_focus_group(assimilated):
 
 
 def add_penn_eras(assimilated):
+    print("=== Adding Penn Era's Data ===")
+
     source_name = "penn_era"
     with open(
         R".\raw_inputs\pennington_feasibility\pennington_eras.csv", "r"
@@ -319,7 +365,7 @@ def add_penn_eras(assimilated):
             xml_attr = name_to_xml(splitter[1].split(" ")[0], splitter[1].split(" ")[1])
 
             if xml_attr == None:
-                print(f"ERROR {splitter[1]} not in alumni dat")
+                print(f"    ERROR {splitter[1]} not in alumni dat")
             else:
                 temp_xml = ET.SubElement(xml_attr, source_name)
                 temp_xml.set("initiation", splitter[0])
@@ -330,6 +376,8 @@ def add_penn_eras(assimilated):
 
 
 def add_penn_contact(assimilated):
+    print("=== Adding Penn Contact List Data ===")
+
     source_name = "penn_contact"
     with open(
         R".\raw_inputs\pennington_feasibility\pennington_contact_list.csv", "r"
@@ -344,7 +392,7 @@ def add_penn_contact(assimilated):
                 )
 
             if xml_attr == None:
-                print(f"ERROR {splitter[0]} not in alumni dat")
+                print(f"    ERROR {splitter[0]} not in alumni dat")
             else:
                 temp_xml = ET.SubElement(xml_attr, source_name)
 
@@ -376,6 +424,8 @@ def add_penn_contact(assimilated):
 
 
 def add_penn_call_status(assimilated):
+    print("=== Adding Penn Call Status Data ===")
+
     source_name = "penn_call_status"
     with open(
         R".\raw_inputs\pennington_feasibility\pennington_call_status.csv", "r"
@@ -386,7 +436,7 @@ def add_penn_call_status(assimilated):
             xml_attr = name_to_xml(splitter[2], splitter[3])
 
             if xml_attr == None:
-                print(f"ERROR {splitter[2]} {splitter[3]} not in alumni dat")
+                print(f"    ERROR {splitter[2]} {splitter[3]} not in alumni dat")
             else:
                 temp_xml = ET.SubElement(xml_attr, source_name)
 
@@ -421,40 +471,8 @@ def add_penn_call_status(assimilated):
                     temp_xml.set("comment_str", splitter[13])
 
 
-def add_facebook_list(assimilated):
-    fb_name_dict = {
-        x.find("facebook").get("name"): x
-        for x in assimilated.xpath("./alumni[./facebook]")
-    }
-
-    source_name = "facebook"
-    with open(R".\raw_inputs\misc\facebook_list_04_01_22.csv", "r") as fb_list:
-        for line in fb_list.readlines()[1:]:
-            line = line.replace("\n", "").replace('"', "")
-            splitter = line.split(",")
-            xml_attr = fb_name_dict.get(splitter[0], None)
-
-            if xml_attr == None:
-                xml_attr = name_to_xml(
-                    splitter[0].split(" ")[0], " ".join(splitter[0].split(" ")[1:])
-                )
-            if xml_attr == None and len(splitter[0].split(" ")) > 2:
-                xml_attr = name_to_xml(
-                    splitter[0].split(" ")[0], splitter[0].split(" ")[-1]
-                )
-            if xml_attr == None:
-                xml_attr = name_to_xml(
-                    splitter[0].split(" ")[0], splitter[0].split(" ")[1]
-                )
-
-            if xml_attr == None:
-                print(f"ERROR {splitter[0]} not in alumni dat")
-            else:
-                do_noting = 1
-                # temp_xml = ET.SubElement(xml_attr, source_name)
-
-
 def add_penn_feasability(assimilated):
+    print("=== Adding Penn Feasability Data ===")
     source_name = "penn_feasability"
     with open(
         R".\raw_inputs\pennington_feasibility\penngington_feasibility_study.csv", "r"
@@ -466,7 +484,7 @@ def add_penn_feasability(assimilated):
             xml_attr = name_to_xml(splitter[8], splitter[10])
 
             if xml_attr == None:
-                print(f"ERROR {splitter[8]} {splitter[10]} not in alumni dat")
+                print(f"    ERROR {splitter[8]} {splitter[10]} not in alumni dat")
             else:
                 temp_xml = ET.SubElement(xml_attr, source_name)
 
@@ -505,7 +523,144 @@ def add_penn_feasability(assimilated):
                     add_email_or_update_source(xml_attr, email, source_name)
 
 
+def add_facebook_list(assimilated):
+    print("=== Adding FB List Data ===")
+
+    fb_name_dict = {}
+    for almn in assimilated.xpath("./alumni[./alternate_names]"):
+        for name in [x.get("name") for x in almn.findall("./alternate_names/alt_name")]:
+            fb_name_dict[name] = almn
+
+    all_alumn_string = []
+    for al in assimilated.findall("alumni"):
+        all_alumn_string.append(ET.tostring(al).decode())
+
+    source_name = "facebook"
+    with open(R".\raw_inputs\misc\facebook_list_04_01_22.csv", "r") as fb_list:
+        for line in fb_list.readlines()[1:]:
+            line = line.replace("\n", "").replace('"', "")
+            splitter = line.split(",")
+            xml_attr = fb_name_dict.get(splitter[0].lower(), None)
+
+            if xml_attr == None:
+                xml_attr = name_to_xml(
+                    splitter[0].split(" ")[0], " ".join(splitter[0].split(" ")[1:])
+                )
+            if xml_attr == None and len(splitter[0].split(" ")) > 2:
+                xml_attr = name_to_xml(
+                    splitter[0].split(" ")[0], splitter[0].split(" ")[-1]
+                )
+            if xml_attr == None:
+                xml_attr = name_to_xml(
+                    splitter[0].split(" ")[0], splitter[0].split(" ")[1]
+                )
+
+            if xml_attr == None:
+                if splitter[0] not in exception_list:
+                    print(f"    ERROR {splitter[0]} not in alumni dat")
+
+                for al in all_alumn_string:
+                    if (
+                        splitter[0].split(" ")[0] in al
+                        and splitter[0].split(" ")[1] in al
+                    ):
+                        print(f"\n{al}\n")
+
+            else:
+                add_alt_name(xml_attr, splitter[0])
+                temp_xml = ET.SubElement(xml_attr, source_name)
+                if splitter[1] != "Invited":
+                    temp_xml.set("town_hall_attend", splitter[1])
+
+
+def add_fd_event_attendance(assimilated):
+    print("=== Parsing Founders Day Data ===")
+    fd_path = R".\raw_inputs\alumni_event_attendance\founders_day\trimmed"
+
+    alt_name_dict = {}
+    for almn in assimilated.xpath("./alumni[./alternate_names]"):
+        for name in [x.get("name") for x in almn.findall("./alternate_names/alt_name")]:
+            alt_name_dict[name] = almn
+
+    for fd_file in os.scandir(fd_path):
+        fd_year = fd_file.name.split("_")[-1].replace(".csv", "")
+        print(f"    {fd_year}:")
+        with open(fd_file.path, "r") as fd_file_open:
+            for line in fd_file_open.readlines()[1:]:
+                line = line.replace("\n", "")
+                splitter = line.split(",")
+                xml_attr = name_to_xml(
+                    splitter[0].replace(" ", ""), splitter[1].replace(" ", "")
+                )
+                if xml_attr == None:
+                    xml_attr = alt_name_dict.get(
+                        splitter[0].lower() + " " + splitter[1].lower(), None
+                    )
+
+                if xml_attr == None:
+                    if f"{splitter[0]} {splitter[1]}" not in exception_list:
+                        print(
+                            f"        ERROR {splitter[0]} {splitter[1]} not in alumni dat"
+                        )
+                else:
+                    events_xml = xml_attr.find("event_attendance")
+                    if events_xml == None:
+                        events_xml = ET.SubElement(xml_attr, "event_attendance")
+                    events_xml.set(f"FD_{fd_year}", "true")
+
+                    if fd_year in ["2016", "2017", "2019", "2020", "2022"]:
+                        add_email_or_update_source(
+                            xml_attr, splitter[2].lower(), f"FD_{fd_year}"
+                        )
+
+                    if fd_year in ["2016", "2019"] and splitter[3]:
+                        street = splitter[3]
+                        if splitter[4]:
+                            street += " " + splitter[4]
+                        city = splitter[5]
+                        state = splitter[6]
+                        zip = splitter[7]
+                        add_addr_or_update_source(
+                            xml_attr, street, city, state, zip, f"FD_{fd_year}"
+                        )
+
+
+def add_tcaa_event_attendance(assimilated):
+    tcaa_path = R".\raw_inputs\alumni_event_attendance\tcaa_cup\trimmed"
+
+    print("=== Parsing TCAA Cup Data ===")
+
+    alt_name_dict = {}
+    for almn in assimilated.xpath("./alumni[./alternate_names]"):
+        for name in [x.get("name") for x in almn.findall("./alternate_names/alt_name")]:
+            alt_name_dict[name] = almn
+
+    for tcaa_file in os.scandir(tcaa_path):
+        tcaa_year = tcaa_file.name.split("_")[-1].replace(".csv", "")
+        print(f"    {tcaa_year}:")
+        with open(tcaa_file.path, "r") as tcaa_file_open:
+            for line in tcaa_file_open.readlines()[1:]:
+                line = line.replace("\n", "")
+                splitter = line.split(",")
+                xml_attr = name_to_xml(
+                    splitter[0].replace(" ", ""), splitter[1].replace(" ", "")
+                )
+                if xml_attr == None:
+                    xml_attr = name_to_xml(splitter[0], splitter[1])
+                if xml_attr == None:
+                    xml_attr = alt_name_dict.get(
+                        splitter[0].lower() + " " + splitter[1].lower(), None
+                    )
+
+                if xml_attr == None:
+                    if f"{splitter[0]} {splitter[1]}" not in exception_list:
+                        print(
+                            f"        ERROR {splitter[0]} {splitter[1]} not in alumni dat"
+                        )
+
+
 def perform_corrections(foundation_xml):
+    # region Correct Pref and Legal Names
     sfid_dict["0036A00000YeHoyQAF"].set("preferred_first_name", "Andy")
     sfid_dict["0036A00000YeHydQAF"].set("preferred_first_name", "Randy")
     sfid_dict["0036A00000YeWcqQAF"].set("preferred_first_name", "Rob")
@@ -527,6 +682,8 @@ def perform_corrections(foundation_xml):
     sfid_dict["0036A00000dzULNQA2"].set("preferred_first_name", "Max")
     sfid_dict["0033u00001QkIAMAA3"].set("legal_first_name", "Finnegan")
     sfid_dict["0033u00001OEaHdAAL"].set("legal_first_name", "Thomas")
+    sfid_dict["0036A00000Yebo7QAB"].set("legal_first_name", "Zachary")
+    sfid_dict["0036A00000YefydQAB"].set("legal_first_name", "Joshua")
     sfid_dict["0036A00000dzUM6QAM"].set("preferred_first_name", "Zach")
     sfid_dict["0036A00000dzULhQAM"].set("preferred_first_name", "Ben")
     sfid_dict["0033u00001aTKM7AAO"].set("preferred_first_name", "Benny")
@@ -551,7 +708,7 @@ def perform_corrections(foundation_xml):
     sfid_dict["0036A00000YeTBOQA3"].set("preferred_first_name", "Mick")
     sfid_dict["0036A00000YedloQAB"].set("preferred_first_name", "AJ")
     sfid_dict["0036A00000YeHySQAV"].set("preferred_first_name", "Jeff")
-    sfid_dict["0036A00000YeWIUQA3"].set("preferred_first_name", "Chriss")
+    sfid_dict["0036A00000YeWIUQA3"].set("preferred_first_name", "Chris")
     sfid_dict["0036A00000YeWcsQAF"].set("preferred_first_name", "Chucho")
     sfid_dict["0036A00000YebkVQAR"].set("preferred_first_name", "Chris")
     sfid_dict["0036A00000YebkFQAR"].set("preferred_first_name", "Alex")
@@ -575,29 +732,62 @@ def perform_corrections(foundation_xml):
     sfid_dict["0036A00000YeYmNQAV"].set("preferred_first_name", "Mike")
     sfid_dict["0036A00000YeaLYQAZ"].set("preferred_first_name", "Chris")
     sfid_dict["0036A00000YeYrAQAV"].set("preferred_first_name", "Nick")
+    sfid_dict["0036A00000YeSapQAF"].set("preferred_first_name", "Tom")
+    sfid_dict["0036A00000YeHwOQAV"].set("preferred_first_name", "Bob")
+    sfid_dict["0036A00000YeU2pQAF"].set("preferred_first_name", "Rich")
+    sfid_dict["0036A00000YeIRNQA3"].set("preferred_first_name", "Jim")
+    sfid_dict["0036A00000YeHwUQAV"].set("preferred_first_name", "Jim")
+    sfid_dict["0036A00000YeXCNQA3"].set("preferred_first_name", "Ben")
+    sfid_dict["0036A00000YeVlnQAF"].set("preferred_first_name", "Dan")
+    sfid_dict["0036A00000YeZGwQAN"].set("preferred_first_name", "Clint")
+    sfid_dict["0036A00000YeZGuQAN"].set("preferred_first_name", "Amir")
+    sfid_dict["0036A00000Yeg9gQAB"].set("preferred_first_name", "Tim")
+    sfid_dict["0036A00000YeRSvQAN"].set("preferred_first_name", "Tim")
+    sfid_dict["0036A00000YeSauQAF"].set("preferred_first_name", "Mike")
+    sfid_dict["0036A00000YeHyZQAV"].set("preferred_first_name", "Tom")
+    sfid_dict["0036A00000YeHyHQAV"].set("preferred_first_name", "Tom")
+    sfid_dict["0036A00000YeHyVQAV"].set("legal_first_name", "Thomas")
+    sfid_dict["0036A00000YeIQxQAN"].set("preferred_first_name", "Chuck")
+    sfid_dict["0036A00000YeHyQQAV"].set("preferred_first_name", "Nate")
+    sfid_dict["0036A00000Yeg9QQAR"].set("preferred_first_name", "Jeff")
+    sfid_dict["0036A00000YeIiMQAV"].set("preferred_first_name", "Dan")
+    sfid_dict["0036A00000emwJ2QAI"].set("preferred_first_name", "Ben")
+    sfid_dict["0036A00000YeHyqQAF"].set("preferred_first_name", "Jeff")
+    # endregion
 
-    ## Add facebook names manually for some that are tricky
-    id_fb_name = {
-        "0033u00001QkIAHAA3": "Aaron Latterell",
-        "0033u000012E34XAAS": "Dylan Tripp Surprise",
-        "0036A00000YeePNQAZ": "Mimmy Turphy",
-        "0036A00000Yeez0QAB": "Joey Griffiths",
-        "0036A00000YeiDTQAZ": "David William Walker",
-        "0036A00000Yeez1QAB": "Andrew Hancock Turner",
-        "0036A00000YecZyQAJ": "Aaron Jay-Donald Cotton",
-        "0036A00000YeePSQAZ": "David Brink Watts",
-        "0036A00000YefKpQAJ": "Justin Nathan",
-        "0036A00000YegXwQAJ": "Luke Ashley",
-        "0036A00000YedgjQAB": "Andrew Dobin",
-        "0036A00000YegZ1QAJ": "Meir Avila",
-        "0036A00000YebkJQAR": "Ravi Kiran",
-        "0036A00000YeVljQAF": "Rick Licki",
-        "0036A00000YeYGuQAN": "Levon Esay",
-        "0036A00000YeYGsQAN": "Christian Wallace",
-        "0036A00000YegZDQAZ": "Ian Ni-kaza",
+    ## Add alternate (facebook) names manually for some that are tricky
+    id_alt_name = {
+        "0033u00001QkIAHAA3": ["Aaron Latterell"],
+        "0033u000012E34XAAS": ["Dylan Tripp Surprise"],
+        "0036A00000YeePNQAZ": ["Mimmy Turphy"],
+        "0036A00000Yeez0QAB": ["Joey Griffiths"],
+        "0036A00000YeiDTQAZ": ["David William Walker"],
+        "0036A00000Yeez1QAB": ["Andrew Hancock Turner"],
+        "0036A00000YecZyQAJ": ["Aaron Jay-Donald Cotton"],
+        "0036A00000YeePSQAZ": ["David Brink Watts"],
+        "0036A00000YefKpQAJ": ["Justin Nathan"],
+        "0036A00000YegXwQAJ": ["Luke Ashley"],
+        "0036A00000YedgjQAB": ["Andrew Dobin"],
+        "0036A00000YegZ1QAJ": ["Meir Avila", "Meir Andres Avila Aznar"],
+        "0036A00000YebkJQAR": ["Ravi Kiran"],
+        "0036A00000YeVljQAF": ["Rick Licki"],
+        "0036A00000YeYGuQAN": ["Levon Esay"],
+        "0036A00000YeYGsQAN": ["Christian Wallace"],
+        "0036A00000YegZDQAZ": ["Ian Ni-kaza"],
+        "0036A00000YecPjQAJ": ["Jordan Michael"],
+        "0036A00000YeZb2QAF": ["Michael Robert"],
+        "0036A00000YeZuhQAF": ["Thomas Edward"],
+        "0036A00000Yebo5QAB": ["John Thomas"],
+        "0036A00000YeZGuQAN": ["Amir Isthere"],
+        "0036A00000YegZ2QAJ": ["Diego De Bedout"],
+        "0036A00000YeIRNQA3": ["Jim Weiler Sr"],
+        "0036A00000YeIj4QAF": ["Jim Weiler Jr", "Wheels Weiler", "James Weiler Jr"],
+        "0036A00000YeWIUQA3": ["Chriss Schwiderski"],
     }
-    for id, fb_name in id_fb_name.items():
-        ET.SubElement(sfid_dict[id], "facebook", {"name": fb_name})
+    for id, alt_name in id_alt_name.items():
+        atl_names_xml = ET.SubElement(sfid_dict[id], "alternate_names")
+        for an in alt_name:
+            ET.SubElement(atl_names_xml, "alt_name", {"name": an.lower()})
 
     # Fix all phone numbers and add as a child element:
     phone_labels = ["preferred_phone_number", "phone", "home_phone", "work_phone"]
@@ -723,13 +913,16 @@ def main():
 
     xml_path = os.path.join("new_output", "assimilated_foundation.xml")
 
-    get_stats(xml_path)
-    return
+    # get_stats(xml_path)
+    # return
 
     foundation_xml = parse_foundation()
     set_dicts(foundation_xml)
     perform_corrections(foundation_xml)
     set_dicts(foundation_xml)
+
+    check_repeats(foundation_xml)
+    return
 
     add_misc_data(foundation_xml)
     add_penn_focus_group(foundation_xml)
@@ -738,6 +931,8 @@ def main():
     add_penn_call_status(foundation_xml)
     add_penn_feasability(foundation_xml)
     add_facebook_list(foundation_xml)
+    add_fd_event_attendance(foundation_xml)
+    add_tcaa_event_attendance(foundation_xml)
 
     xml_to_file(foundation_xml, xml_path)
 
