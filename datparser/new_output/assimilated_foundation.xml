@@ -11371,6 +11371,10 @@
     </mailing_addresses>
   </alumni>
   <alumni salesforce_id="0036A00000YedglQAB" legal_first_name="William" preferred_first_name="Will" legal_middle_name="T" legal_last_name="McInerney" initiation_date="4/29/2012" chapter_of_initiation="Minnesota Beta" chapter_of_initiation_roll_number="1521" chapter_of_graduation="Minnesota Beta" undergraduate_chapter_status="Alumnus" primary_country="United States" mn_beta_all_time="true" mn_beta_alumni_list="true">
+    <alternate_names>
+      <alt_name name="will mack"/>
+      <alt_name name="Will Mack"/>
+    </alternate_names>
     <phone_numbers>
       <phone type="preferred_phone_number" number="2184910863" source="foundation"/>
       <phone type="phone" number="2184910863" source="foundation"/>
@@ -11382,6 +11386,7 @@
     <mailing_addresses>
       <address street="1953 Woodhaven Ln." city="Duluth" state="Minnesota" zip="55803" source="foundation"/>
     </mailing_addresses>
+    <facebook/>
   </alumni>
   <alumni salesforce_id="0036A00000YeePKQAZ" legal_first_name="Timothy" preferred_first_name="Tim" legal_last_name="Jacobsen" initiation_date="11/17/2012" chapter_of_initiation="Minnesota Beta" chapter_of_initiation_roll_number="1522" chapter_of_graduation="Minnesota Beta" undergraduate_chapter_status="Alumnus" primary_country="United States" mn_beta_all_time="true" mn_beta_alumni_list="true" twin_cities_alumni_list="true">
     <phone_numbers>

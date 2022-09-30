@@ -4,10 +4,12 @@ import os
 sfid_dict = {}
 legal_name_dict = {}
 pref_name_dict = {}
+legal_repeat_dict = {}
+pref_repeat_dict = {}
+alt_name_dict = {}
 
 exception_list = {
     "Peter Anderson": "Iowa Beta Alumn (2016 FD, 2016 TCAA)",
-    "Chris Reeck": "Seems legit, 2016, 2017 FD and TCAA",
     "Chris Reeck": "Seems legit, 2016, 2017 FD and TCAA",
     "Spencer Burke": "Ohio Iota chapter, 2018 grad",
     "Adam Morgan": "PKP Foundation Guy",
@@ -16,15 +18,29 @@ exception_list = {
     "Tyler Tretter": "No clue (2021 TCAA) Duluth Guy",
     "Aaron Fromm": "No clue (2021 TCAA) maybe undergrad",
     "Joseph Hinkle": "No clue (2021 TCAA)",
+    "Gottfreid Lutumba": "OU Alumni, moved up here last year",
+    "Carlos R Hernandez": "Nationals Guy",
+    "Lee Fuller": "Foundation Guy",
 }
 
 
 def name_to_xml(first, last):
     unique = f"{first.lower()}_{last.lower()}"
+    alt_name = f"{first.lower()} {last.lower()}"
     if unique in legal_name_dict:
+        if unique in legal_repeat_dict and len(legal_repeat_dict[unique]) > 1:
+            print(f"    WARNING: Repeat Name Mapped [{unique}]")
+            for id in legal_repeat_dict[unique]:
+                print(f"        [{id}]")
         return legal_name_dict[unique]
     elif unique in pref_name_dict:
+        if unique in pref_repeat_dict and len(pref_repeat_dict[unique]) > 1:
+            print(f"    WARNING: Repeat Name Mapped [{unique}]")
+            for id in pref_repeat_dict[unique]:
+                print(f"        [{id}]")
         return pref_name_dict[unique]
+    elif alt_name in alt_name_dict:
+        return alt_name_dict[alt_name]
     else:
         return None
 
@@ -228,6 +244,13 @@ def set_dicts(assimlated_xml):
     global sfid_dict
     global legal_name_dict
     global pref_name_dict
+    global legal_repeat_dict
+    global pref_repeat_dict
+    global alt_name_dict
+
+    legal_repeat_dict = {}
+    pref_repeat_dict = {}
+    alt_name_dict = {}
 
     sfid_dict = {x.get("salesforce_id"): x for x in assimlated_xml.findall("alumni")}
     legal_name_dict = {
@@ -239,20 +262,26 @@ def set_dicts(assimlated_xml):
         for x in assimlated_xml.findall("alumni")
     }
 
-
-def check_repeats(assimlated_xml):
-    found_names = {}
-    for x in assimlated_xml.xpath("./alumni"):
+    for x in assimlated_xml.xpath("./alumni[not(@deceased)]"):
         sfid = x.get("salesforce_id")
-        name = f"{x.get('legal_first_name').lower()}_{x.get('legal_last_name').lower()}"
+        legal_name = (
+            f"{x.get('legal_first_name').lower()}_{x.get('legal_last_name').lower()}"
+        )
+        pref_name = f"{x.get('preferred_first_name').lower()}_{x.get('legal_last_name').lower()}"
 
-        if name in found_names:
-            print(f"Repeat Name: [{name}]")
-            found_names[name].append(sfid)
-            for val in found_names[name]:
-                print(f"    {val}")
+        if legal_name in legal_repeat_dict:
+            legal_repeat_dict[legal_name].append(sfid)
         else:
-            found_names[name] = []
+            legal_repeat_dict[legal_name] = [sfid]
+        if pref_name in pref_repeat_dict:
+            pref_repeat_dict[pref_name].append(sfid)
+        else:
+            pref_repeat_dict[pref_name] = [sfid]
+
+    alt_name_dict = {}
+    for almn in assimlated_xml.xpath("./alumni[./alternate_names]"):
+        for name in [x.get("name") for x in almn.findall("./alternate_names/alt_name")]:
+            alt_name_dict[name] = almn
 
 
 def parse_foundation():
@@ -526,11 +555,6 @@ def add_penn_feasability(assimilated):
 def add_facebook_list(assimilated):
     print("=== Adding FB List Data ===")
 
-    fb_name_dict = {}
-    for almn in assimilated.xpath("./alumni[./alternate_names]"):
-        for name in [x.get("name") for x in almn.findall("./alternate_names/alt_name")]:
-            fb_name_dict[name] = almn
-
     all_alumn_string = []
     for al in assimilated.findall("alumni"):
         all_alumn_string.append(ET.tostring(al).decode())
@@ -540,17 +564,18 @@ def add_facebook_list(assimilated):
         for line in fb_list.readlines()[1:]:
             line = line.replace("\n", "").replace('"', "")
             splitter = line.split(",")
-            xml_attr = fb_name_dict.get(splitter[0].lower(), None)
+            # (a) Try First name, Last Name (combined if there are multiple)
+            xml_attr = name_to_xml(
+                splitter[0].split(" ")[0], " ".join(splitter[0].split(" ")[1:])
+            )
 
-            if xml_attr == None:
-                xml_attr = name_to_xml(
-                    splitter[0].split(" ")[0], " ".join(splitter[0].split(" ")[1:])
-                )
             if xml_attr == None and len(splitter[0].split(" ")) > 2:
+                # (b) Try First Name and last last name if multiple
                 xml_attr = name_to_xml(
                     splitter[0].split(" ")[0], splitter[0].split(" ")[-1]
                 )
             if xml_attr == None:
+                # (c) Try First Name and first last name if multiple
                 xml_attr = name_to_xml(
                     splitter[0].split(" ")[0], splitter[0].split(" ")[1]
                 )
@@ -577,11 +602,6 @@ def add_fd_event_attendance(assimilated):
     print("=== Parsing Founders Day Data ===")
     fd_path = R".\raw_inputs\alumni_event_attendance\founders_day\trimmed"
 
-    alt_name_dict = {}
-    for almn in assimilated.xpath("./alumni[./alternate_names]"):
-        for name in [x.get("name") for x in almn.findall("./alternate_names/alt_name")]:
-            alt_name_dict[name] = almn
-
     for fd_file in os.scandir(fd_path):
         fd_year = fd_file.name.split("_")[-1].replace(".csv", "")
         print(f"    {fd_year}:")
@@ -589,13 +609,15 @@ def add_fd_event_attendance(assimilated):
             for line in fd_file_open.readlines()[1:]:
                 line = line.replace("\n", "")
                 splitter = line.split(",")
+
+                # (a) Try Standard
                 xml_attr = name_to_xml(
                     splitter[0].replace(" ", ""), splitter[1].replace(" ", "")
                 )
+
+                # (b) Try leaving spaces
                 if xml_attr == None:
-                    xml_attr = alt_name_dict.get(
-                        splitter[0].lower() + " " + splitter[1].lower(), None
-                    )
+                    xml_attr = name_to_xml(splitter[0], splitter[1])
 
                 if xml_attr == None:
                     if f"{splitter[0]} {splitter[1]}" not in exception_list:
@@ -630,11 +652,6 @@ def add_tcaa_event_attendance(assimilated):
 
     print("=== Parsing TCAA Cup Data ===")
 
-    alt_name_dict = {}
-    for almn in assimilated.xpath("./alumni[./alternate_names]"):
-        for name in [x.get("name") for x in almn.findall("./alternate_names/alt_name")]:
-            alt_name_dict[name] = almn
-
     for tcaa_file in os.scandir(tcaa_path):
         tcaa_year = tcaa_file.name.split("_")[-1].replace(".csv", "")
         print(f"    {tcaa_year}:")
@@ -642,15 +659,15 @@ def add_tcaa_event_attendance(assimilated):
             for line in tcaa_file_open.readlines()[1:]:
                 line = line.replace("\n", "")
                 splitter = line.split(",")
+
+                # (a) Try standard but remove spaces
                 xml_attr = name_to_xml(
                     splitter[0].replace(" ", ""), splitter[1].replace(" ", "")
                 )
+
+                # (b) Try standard and leave spaces
                 if xml_attr == None:
                     xml_attr = name_to_xml(splitter[0], splitter[1])
-                if xml_attr == None:
-                    xml_attr = alt_name_dict.get(
-                        splitter[0].lower() + " " + splitter[1].lower(), None
-                    )
 
                 if xml_attr == None:
                     if f"{splitter[0]} {splitter[1]}" not in exception_list:
@@ -783,6 +800,7 @@ def perform_corrections(foundation_xml):
         "0036A00000YeIRNQA3": ["Jim Weiler Sr"],
         "0036A00000YeIj4QAF": ["Jim Weiler Jr", "Wheels Weiler", "James Weiler Jr"],
         "0036A00000YeWIUQA3": ["Chriss Schwiderski"],
+        "0036A00000YedglQAB": ["Will Mack"],
     }
     for id, alt_name in id_alt_name.items():
         atl_names_xml = ET.SubElement(sfid_dict[id], "alternate_names")
@@ -920,9 +938,6 @@ def main():
     set_dicts(foundation_xml)
     perform_corrections(foundation_xml)
     set_dicts(foundation_xml)
-
-    check_repeats(foundation_xml)
-    return
 
     add_misc_data(foundation_xml)
     add_penn_focus_group(foundation_xml)
