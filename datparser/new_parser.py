@@ -1122,28 +1122,63 @@ def normalize_addr(sfid, fname, lname, street, city, state, zip):
         temp_addr.valid = False
         temp_addr.invalid_reason = reason
 
+    return temp_addr
+
 
 def test_addr_verificaiton(xml_in):
     print(len(xml_in.xpath("./alumni[./mailing_addresses and not(@deceased)]")))
+
+    all_alumni_xml = ET.Element("alumni_addr")
+
     count = 0
     for alumni in xml_in.xpath("./alumni[./mailing_addresses and not(@deceased)]"):
         fname = alumni.get("legal_first_name")
         lname = alumni.get("legal_last_name")
         sfid = alumni.get("salesforce_id")
 
+        count += 1
+
+        alumni_addr = ET.SubElement(all_alumni_xml, "alumni", {"SFID": sfid})
+
         for addr in alumni.xpath("./mailing_addresses/address"):
+
+            address_xml = ET.SubElement(alumni_addr, "address")
 
             street = addr.get("street")
             city = addr.get("city")
             state = addr.get("state")
             zip = addr.get("zip")
 
-            normalize_addr(sfid, fname, lname, street, city, state, zip)
+            original_addr = ET.SubElement(
+                address_xml,
+                "original",
+                {
+                    "street": street,
+                    "city": city,
+                    "state": state,
+                    "zip": zip,
+                },
+            )
 
-            if count > 200:
-                return
+            val_back = normalize_addr(sfid, fname, lname, street, city, state, zip)
 
-            count += 1
+            if val_back.valid == False:
+                original_addr.set("invalid", val_back.invalid_reason)
+            else:
+                ET.SubElement(
+                    address_xml,
+                    "cleaned",
+                    {
+                        "addr_1": val_back.addr_1,
+                        "addr_2": val_back.addr_2,
+                        "city": val_back.city,
+                        "state": val_back.state,
+                        "zip4": val_back.zip4,
+                        "zip5": val_back.zip5,
+                    },
+                )
+
+    xml_to_file(all_alumni_xml, "./new_output/address_fix.xml")
 
 
 def main():
