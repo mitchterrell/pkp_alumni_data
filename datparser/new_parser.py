@@ -12,6 +12,9 @@ class our_address:
         self.zip5 = ""
         self.zip4 = ""
 
+        self.valid = True
+        self.invalid_reason = ""
+
 
 sfid_dict = {}
 legal_name_dict = {}
@@ -625,9 +628,15 @@ def add_facebook_list(assimilated):
 
             else:
                 add_alt_name(xml_attr, splitter[0])
+                # Add FB node to XML
                 temp_xml = ET.SubElement(xml_attr, source_name)
+
+                # Add event attendance to list
                 if splitter[1] != "Invited":
-                    temp_xml.set("town_hall_attend", splitter[1])
+                    event_xml = xml_attr.find("event_attendance")
+                    if event_xml == None:
+                        event_xml = ET.SubElement(xml_attr, "event_attendance")
+                    event_xml.set("town_hall_attend", "true")
 
 
 def add_pkp_reno_interest(assimilated):
@@ -726,6 +735,7 @@ def add_tcaa_event_attendance(assimilated):
     for tcaa_file in os.scandir(tcaa_path):
         tcaa_year = tcaa_file.name.split("_")[-1].replace(".csv", "")
         print(f"    {tcaa_year}:")
+        source_name = f"TCAA_{tcaa_year}"
         with open(tcaa_file.path, "r") as tcaa_file_open:
             for line in tcaa_file_open.readlines()[1:]:
                 line = line.replace("\n", "")
@@ -745,6 +755,23 @@ def add_tcaa_event_attendance(assimilated):
                         print(
                             f"        ERROR {splitter[0]} {splitter[1]} not in alumni dat"
                         )
+
+                else:
+                    event_xml = xml_attr.find("event_attendance")
+                    if event_xml == None:
+                        event_xml = ET.SubElement(xml_attr, "event_attendance")
+                    event_xml.set(source_name, "true")
+
+                    if tcaa_year in ["2022", "2021", "2018"]:
+                        email = splitter[2].lower()
+                        if email:
+                            add_email_or_update_source(xml_attr, email, source_name)
+                    if tcaa_year == "2016":
+                        if splitter[2] != "N/A":
+                            cell = fix_cell(splitter[2])
+                            add_num_or_update_source(
+                                xml_attr, cell, "Unkown", source_name
+                            )
 
 
 def perform_corrections(foundation_xml):
@@ -769,6 +796,7 @@ def perform_corrections(foundation_xml):
     sfid_dict["0036A00000YeZWEQA3"].set("preferred_first_name", "Ben")
     sfid_dict["0036A00000dzULNQA2"].set("preferred_first_name", "Max")
     sfid_dict["0033u00001QkIAMAA3"].set("legal_first_name", "Finnegan")
+    sfid_dict["0036A00000YeaTJQAZ"].set("legal_first_name", "Thomas")
     sfid_dict["0033u00001OEaHdAAL"].set("legal_first_name", "Thomas")
     sfid_dict["0036A00000Yebo7QAB"].set("legal_first_name", "Zachary")
     sfid_dict["0036A00000YefydQAB"].set("legal_first_name", "Joshua")
@@ -841,6 +869,7 @@ def perform_corrections(foundation_xml):
     sfid_dict["0036A00000YeIiMQAV"].set("preferred_first_name", "Dan")
     sfid_dict["0036A00000emwJ2QAI"].set("preferred_first_name", "Ben")
     sfid_dict["0036A00000YeHyqQAF"].set("preferred_first_name", "Jeff")
+    sfid_dict["0036A00000Yeg9SQAR"].set("preferred_first_name", "Steve")
     # endregion
 
     ## Add alternate (facebook) names manually for some that are tricky
@@ -868,7 +897,7 @@ def perform_corrections(foundation_xml):
         "0036A00000Yebo5QAB": ["John Thomas"],
         "0036A00000YeZGuQAN": ["Amir Isthere"],
         "0036A00000YegZ2QAJ": ["Diego De Bedout"],
-        "0036A00000YeIRNQA3": ["Jim Weiler Sr"],
+        "0036A00000YeIRNQA3": ["Jim Weiler Sr", "James Weiler Sr"],
         "0036A00000YeIj4QAF": ["Jim Weiler Jr", "Wheels Weiler", "James Weiler Jr"],
         "0036A00000YeWIUQA3": ["Chriss Schwiderski"],
         "0036A00000YedglQAB": ["Will Mack"],
@@ -966,6 +995,27 @@ def perform_corrections(foundation_xml):
             del elem.attrib["primary_zip_postal_code"]
 
 
+def trim_numbers(assimilated):
+    for alumni in assimilated.xpath("./alumni[./phone_numbers/phone]"):
+        phone_dict = {}
+        pnum_xml = alumni.find("phone_numbers")
+        for phone in alumni.xpath("./phone_numbers/phone"):
+            num = phone.get("number")
+            if num not in phone_dict:
+                phone_dict[num] = [phone.get("type"), phone.get("source")]
+            else:
+                phone_dict[num][0] += ";" + phone.get("type")
+                phone_dict[num][1] += ";" + phone.get("source")
+
+            pnum_xml.remove(phone)
+
+        for num, vals in phone_dict.items():
+            new_num = ET.SubElement(pnum_xml, "phone")
+            new_num.set("type", ";".join(set(vals[0].split(";"))))
+            new_num.set("number", num)
+            new_num.set("source", ";".join(set(vals[1].split(";"))))
+
+
 def percentage_to_str(num, denom):
     return f"{(num/denom)*100:.2f}%"
 
@@ -1006,43 +1056,80 @@ def get_stats(xml_path):
     )
 
 
-def normalize_addr(fname, lname, street, city, state, zip):
+def normalize_addr(sfid, fname, lname, street, city, state, zip):
+    temp_addr = our_address()
+
+    # Fix Street
+    street_2 = ""
+    if "#" in street:
+        street_2 = "Unit " + street.split("#")[-1]
+        street = street.split("#")[0]
+
+    # Fix Zip
+    zip_2 = ""
+    if "-" in zip:
+        zip_2 = zip.split("-")[-1]
+        zip = zip.split("-")[0]
+
+    # Fix leading 0 on zip
+    if len(zip) < 5:
+        zip = f"0{zip}"
+
     address = Address(
         name=f"{fname} {lname}",
         address_1=street,
+        address_2=street_2,
         city=city,
         state=state,
         zipcode=zip,
+        zipcode_ext=zip_2,
     )
     usps = USPSApi("815PHIKA5273", test=True)
 
     validation = usps.validate_address(address)
     if "Error" not in validation.result["AddressValidateResponse"]["Address"]:
-        temp_addr = our_address()
-        temp_addr.addr_1 = validation.result["AddressValidateResponse"]["Address"][
-            "Address1"
-        ]
-        temp_addr.addr_2 = validation.result["AddressValidateResponse"]["Address"][
-            "Address2"
-        ]
-        temp_addr.city = validation.result["AddressValidateResponse"]["Address"]["City"]
-        temp_addr.state = validation.result["AddressValidateResponse"]["Address"][
-            "State"
-        ]
-        temp_addr.zip5 = validation.result["AddressValidateResponse"]["Address"]["Zip5"]
-        temp_addr.zip4 = validation.result["AddressValidateResponse"]["Address"]["Zip4"]
+        addr_dict = validation.result["AddressValidateResponse"]["Address"]
+
+        if "Address1" in addr_dict:
+            temp_addr.addr_1 = addr_dict["Address1"]
+        if "Address2" in addr_dict:
+            temp_addr.addr_2 = addr_dict["Address2"]
+        if "City" in addr_dict:
+            temp_addr.city = addr_dict["City"]
+        if "State" in addr_dict:
+            temp_addr.state = addr_dict["State"]
+        if "Zip5" in addr_dict:
+            temp_addr.zip5 = addr_dict["Zip5"]
+        if "Zip4" in addr_dict:
+            temp_addr.Zip4 = addr_dict["Zip4"]
     else:
         reason = validation.result["AddressValidateResponse"]["Address"]["Error"][
             "Description"
         ]
-        print(f"Address Failed [{fname} {lname}] because [{reason}]")
+        print(f"Address Failed [{fname} {lname} - {sfid}] because [{reason}]")
+        print(f"    Street:  {street}")
+
+        if street_2:
+            print(f"    Street2: {street_2}")
+
+        print(f"    City:    {city}")
+        print(f"    State:   {state}")
+        print(f"    Zip:     {zip}")
+
+        if zip_2:
+            print(f"    Zip2:    {zip_2}")
+
+        temp_addr.valid = False
+        temp_addr.invalid_reason = reason
 
 
 def test_addr_verificaiton(xml_in):
+    print(len(xml_in.xpath("./alumni[./mailing_addresses and not(@deceased)]")))
     count = 0
-    for alumni in xml_in.xpath("./alumni[./mailing_addresses]"):
+    for alumni in xml_in.xpath("./alumni[./mailing_addresses and not(@deceased)]"):
         fname = alumni.get("legal_first_name")
         lname = alumni.get("legal_last_name")
+        sfid = alumni.get("salesforce_id")
 
         for addr in alumni.xpath("./mailing_addresses/address"):
 
@@ -1051,23 +1138,12 @@ def test_addr_verificaiton(xml_in):
             state = addr.get("state")
             zip = addr.get("zip")
 
-            normalize_addr(fname, lname, street, city, state, zip)
+            normalize_addr(sfid, fname, lname, street, city, state, zip)
 
-            if count > 10:
+            if count > 200:
                 return
 
             count += 1
-
-    # address = Address(
-    #     name="Thomas Franklin",
-    #     address_1="5319 Oaklawn Avenue",
-    #     city="Edina",
-    #     state="Minnesota",
-    #     zipcode="55555",
-    # )
-    # usps = USPSApi("815PHIKA5273", test=True)
-    # validation = usps.validate_address(address)
-    # print(validation.result)
 
 
 def main():
@@ -1078,11 +1154,11 @@ def main():
     # get_stats(xml_path)
     # return
 
-    tree = ET.parse(xml_path)
-    root = tree.getroot()
+    # tree = ET.parse(xml_path)
+    # root = tree.getroot()
 
-    test_addr_verificaiton(root)
-    return
+    # test_addr_verificaiton(root)
+    # return
 
     foundation_xml = parse_foundation()
     set_dicts(foundation_xml)
@@ -1099,6 +1175,9 @@ def main():
     add_pkp_reno_interest(foundation_xml)
     add_fd_event_attendance(foundation_xml)
     add_tcaa_event_attendance(foundation_xml)
+
+    # Clean Up the Data
+    trim_numbers(foundation_xml)
 
     xml_to_file(foundation_xml, xml_path)
 
