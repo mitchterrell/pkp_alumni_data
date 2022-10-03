@@ -6,9 +6,6 @@
 	],
 	"settings": 
 	{
-		"python.defaultInterpreterPath": ".venv/datparser-RtI9YoZL-py3.10/Scripts/python.exe",
-		"python.terminal.activateEnvInCurrentTerminal": true,
-		"python.terminal.activateEnvironment": true,
 
 		"[python]": {
 			"editor.defaultFormatter": "ms-python.black-formatter",

@@ -1,5 +1,17 @@
 from lxml import etree as ET
 import os
+from usps import USPSApi, Address
+
+
+class our_address:
+    def __init__(self):
+        self.addr_1 = ""
+        self.addr_2 = ""
+        self.city = ""
+        self.state = ""
+        self.zip5 = ""
+        self.zip4 = ""
+
 
 sfid_dict = {}
 legal_name_dict = {}
@@ -21,6 +33,16 @@ exception_list = {
     "Gottfreid Lutumba": "OU Alumni, moved up here last year",
     "Carlos R Hernandez": "Nationals Guy",
     "Lee Fuller": "Foundation Guy",
+    "Max Reyes": "Not sure... seems strange, on FB page no friends",
+    "Ron Paulick": "Not sure who he is, older guy UMN facebook",
+    "Dan Miller": "Not sure... seems weird 4.8K friends",
+    "Greg Wiley": "Not sure... Wiley's dad??",
+    "Wolfie O'Wolfgang": "Not sure... only Wolfgang is Michael Wolfgang",
+    "Ryan Allen": "Def an alumni that we should know... 2012 2013 initiation year",
+    "Ross David": "Another unkown 2013/2012 alumni guy Tom might know him",
+    "Patrick Linder": "Not sure... 80's guy that seems legit but who knows",
+    "Matthew Douglas": "Seems legit, another 2013/ 2014 guy",
+    "Joe Eff": "Blank profile, should block",
 }
 
 
@@ -46,6 +68,9 @@ def name_to_xml(first, last):
 
 
 def add_num_or_update_source(xml_in, cell_in, num_type, source_name):
+    if cell_in == "":
+        return
+
     xml_out = xml_in.find(f"./phone_numbers/phone[@number = '{cell_in}']")
     if xml_out != None:
         cur_sorce = xml_out.get("source")
@@ -63,6 +88,9 @@ def add_num_or_update_source(xml_in, cell_in, num_type, source_name):
 
 
 def add_email_or_update_source(xml_in, email_in, source_name):
+    if email_in == "":
+        return
+
     xml_out = xml_in.find(f"./emails/email[@address = '{email_in}']")
     if xml_out != None:
         cur_sorce = xml_out.get("source")
@@ -82,6 +110,10 @@ def add_email_or_update_source(xml_in, email_in, source_name):
 def add_addr_or_update_source(
     xml_in, street_in, city_in, state_in, zip_in, source_name
 ):
+    street_in = street_in.replace('"', "")
+    city_in = city_in.replace('"', "")
+    state_in = state_in.replace('"', "")
+    zip_in = zip_in.replace('"', "")
     xml_out = xml_in.find(f"./mailing_addresses/address[@street = '{street_in}']")
     if xml_out != None:
         cur_sorce = xml_out.get("source")
@@ -433,7 +465,7 @@ def add_penn_contact(assimilated):
                 if home:
                     add_num_or_update_source(xml_attr, home, "home", source_name)
                 if biznus:
-                    add_num_or_update_source(xml_attr, biznus, "buissness", source_name)
+                    add_num_or_update_source(xml_attr, biznus, "business", source_name)
 
                 temp_xml.set("pref_year", splitter[3])
 
@@ -596,6 +628,45 @@ def add_facebook_list(assimilated):
                 temp_xml = ET.SubElement(xml_attr, source_name)
                 if splitter[1] != "Invited":
                     temp_xml.set("town_hall_attend", splitter[1])
+
+
+def add_pkp_reno_interest(assimilated):
+    print("=== Adding PKP Reno Interest List Data ===")
+
+    all_alumn_string = []
+    for al in assimilated.findall("alumni"):
+        all_alumn_string.append(ET.tostring(al).decode())
+
+    source_name = "pkp_reno_interest"
+    with open(R".\raw_inputs\misc\pkp_reno_interest_form.csv", "r") as fb_list:
+        for line in fb_list.readlines()[1:]:
+            line = line.replace("\n", "").replace('"', "")
+            splitter = line.split(",")
+            # (a) Try First name, Last Name (combined if there are multiple)
+            xml_attr = name_to_xml(
+                splitter[1].split(" ")[0], " ".join(splitter[1].split(" ")[1:])
+            )
+
+            if xml_attr == None:
+                print(f"    ERROR {splitter[1]} not in alumni dat")
+            else:
+                add_email_or_update_source(xml_attr, splitter[0].lower(), source_name)
+                add_num_or_update_source(
+                    xml_attr, fix_cell(splitter[2]), "NA", source_name
+                )
+
+                if splitter[3] != "NA":
+                    street = splitter[3].replace('"', "")
+                    city = splitter[4]
+                    state = splitter[5]
+                    zip = splitter[6]
+                    add_addr_or_update_source(
+                        xml_attr, street, city, state, zip, source_name
+                    )
+
+                added_xml = ET.SubElement(xml_attr, "pkp_reno")
+                added_xml.set("help_interest", splitter[9])
+                added_xml.set("donation_interest", splitter[12])
 
 
 def add_fd_event_attendance(assimilated):
@@ -801,6 +872,15 @@ def perform_corrections(foundation_xml):
         "0036A00000YeIj4QAF": ["Jim Weiler Jr", "Wheels Weiler", "James Weiler Jr"],
         "0036A00000YeWIUQA3": ["Chriss Schwiderski"],
         "0036A00000YedglQAB": ["Will Mack"],
+        "0036A00000YeS8QQAV": ["Jeffrey R. Johnson"],
+        "0036A00000YeHyWQAV": ["Dean N. Thompson"],
+        "0036A00000YeXCIQA3": ["Eric B. Nelson"],
+        "0036A00000YeHy0QAF": ["Jeffrey C. Anderson"],
+        "0036A00000YeHycQAF": ["Theodore T. Chalgren"],
+        "0036A00000Yei1PQAR": ["Michael T. Johnson"],
+        "0036A00000YeeLrQAJ": ["Andrew 2013 Fink"],
+        "0036A00000YeZH1QAN": ["Sean Oh"],
+        "0036A00000YeaLSQAZ": ["JP Squared"],
     }
     for id, alt_name in id_alt_name.items():
         atl_names_xml = ET.SubElement(sfid_dict[id], "alternate_names")
@@ -926,6 +1006,70 @@ def get_stats(xml_path):
     )
 
 
+def normalize_addr(fname, lname, street, city, state, zip):
+    address = Address(
+        name=f"{fname} {lname}",
+        address_1=street,
+        city=city,
+        state=state,
+        zipcode=zip,
+    )
+    usps = USPSApi("815PHIKA5273", test=True)
+
+    validation = usps.validate_address(address)
+    if "Error" not in validation.result["AddressValidateResponse"]["Address"]:
+        temp_addr = our_address()
+        temp_addr.addr_1 = validation.result["AddressValidateResponse"]["Address"][
+            "Address1"
+        ]
+        temp_addr.addr_2 = validation.result["AddressValidateResponse"]["Address"][
+            "Address2"
+        ]
+        temp_addr.city = validation.result["AddressValidateResponse"]["Address"]["City"]
+        temp_addr.state = validation.result["AddressValidateResponse"]["Address"][
+            "State"
+        ]
+        temp_addr.zip5 = validation.result["AddressValidateResponse"]["Address"]["Zip5"]
+        temp_addr.zip4 = validation.result["AddressValidateResponse"]["Address"]["Zip4"]
+    else:
+        reason = validation.result["AddressValidateResponse"]["Address"]["Error"][
+            "Description"
+        ]
+        print(f"Address Failed [{fname} {lname}] because [{reason}]")
+
+
+def test_addr_verificaiton(xml_in):
+    count = 0
+    for alumni in xml_in.xpath("./alumni[./mailing_addresses]"):
+        fname = alumni.get("legal_first_name")
+        lname = alumni.get("legal_last_name")
+
+        for addr in alumni.xpath("./mailing_addresses/address"):
+
+            street = addr.get("street")
+            city = addr.get("city")
+            state = addr.get("state")
+            zip = addr.get("zip")
+
+            normalize_addr(fname, lname, street, city, state, zip)
+
+            if count > 10:
+                return
+
+            count += 1
+
+    # address = Address(
+    #     name="Thomas Franklin",
+    #     address_1="5319 Oaklawn Avenue",
+    #     city="Edina",
+    #     state="Minnesota",
+    #     zipcode="55555",
+    # )
+    # usps = USPSApi("815PHIKA5273", test=True)
+    # validation = usps.validate_address(address)
+    # print(validation.result)
+
+
 def main():
     print("=== Starting PKP Alumni Data Parsing ===")
 
@@ -933,6 +1077,12 @@ def main():
 
     # get_stats(xml_path)
     # return
+
+    tree = ET.parse(xml_path)
+    root = tree.getroot()
+
+    test_addr_verificaiton(root)
+    return
 
     foundation_xml = parse_foundation()
     set_dicts(foundation_xml)
@@ -946,6 +1096,7 @@ def main():
     add_penn_call_status(foundation_xml)
     add_penn_feasability(foundation_xml)
     add_facebook_list(foundation_xml)
+    add_pkp_reno_interest(foundation_xml)
     add_fd_event_attendance(foundation_xml)
     add_tcaa_event_attendance(foundation_xml)
 

@@ -2426,7 +2426,6 @@
       <phone type="phone" number="9285954301" source="foundation"/>
       <phone type="home_phone" number="9285954301" source="foundation"/>
       <phone type="work_phone" number="4803914992" source="foundation"/>
-      <phone type="unknown" number="" source="penn_focus_group"/>
     </phone_numbers>
     <emails>
       <email address="arjpaz@gmail.com" source="foundation;focus_group;penn_focus_group"/>
@@ -3406,7 +3405,6 @@
       <phone type="preferred_phone_number" number="6127201450" source="foundation;penn_contact;penn_call_status;penn_feasability"/>
       <phone type="phone" number="6127201450" source="foundation"/>
       <phone type="home_phone" number="6127201450" source="foundation"/>
-      <phone type="unknown" number="" source="penn_focus_group"/>
       <phone type="home" number="7635461760" source="penn_contact;penn_call_status;penn_feasability"/>
     </phone_numbers>
     <emails>
@@ -4819,16 +4817,22 @@
     </mailing_addresses>
   </alumni>
   <alumni salesforce_id="0036A00000YeHy0QAF" salutation="Mr" legal_first_name="Jeffrey" preferred_first_name="Jeffrey" legal_middle_name="Carl" legal_last_name="Anderson" initiation_date="1/25/1976" chapter_of_initiation="Minnesota Beta" chapter_of_initiation_roll_number="1033" chapter_of_graduation="Minnesota Beta" undergraduate_chapter_status="Alumnus" primary_country="United States" mn_beta_all_time="true" mn_beta_alumni_list="true" twin_cities_alumni_list="true">
+    <alternate_names>
+      <alt_name name="jeffrey c. anderson"/>
+    </alternate_names>
     <phone_numbers>
       <phone type="preferred_phone_number" number="6127762761" source="foundation"/>
       <phone type="work_phone" number="6127762761" source="foundation"/>
+      <phone type="mobile" number="6513299313" source="penn_feasability"/>
     </phone_numbers>
     <emails>
-      <email address="andy2555@comcast.net" source="foundation"/>
+      <email address="andy2555@comcast.net" source="foundation;penn_feasability"/>
     </emails>
     <mailing_addresses>
       <address street="1401 Arcade St." city="St. Paul" state="Minnesota" zip="55106" source="foundation"/>
+      <address street="1401 Arcade St" city="Saint Paul" state="MN" zip="55106-1803" source="penn_feasability"/>
     </mailing_addresses>
+    <penn_feasability pcfs_low="NA" pcfs_high="NA"/>
   </alumni>
   <alumni salesforce_id="0036A00000YeHy1QAF" salutation="Mr" legal_first_name="Dale" preferred_first_name="Dale" legal_middle_name="Brian" legal_last_name="Dissmeyer" initiation_date="1/25/1976" chapter_of_initiation="Minnesota Beta" chapter_of_initiation_roll_number="1034" chapter_of_graduation="Minnesota Beta" undergraduate_chapter_status="Alumnus" primary_country="United States" mn_beta_all_time="true" mn_beta_alumni_list="true" twin_cities_alumni_list="true">
     <phone_numbers>
@@ -4868,7 +4872,6 @@
       <phone type="phone" number="6126855463" source="foundation"/>
       <phone type="home_phone" number="6126855463" source="foundation"/>
       <phone type="work_phone" number="7152462320" source="foundation;penn_contact;penn_call_status"/>
-      <phone type="unknown" number="" source="penn_focus_group"/>
     </phone_numbers>
     <emails>
       <email address="bill@derrickbuilt.com" source="foundation;penn_contact;penn_call_status;FD_2019;FD_2020;FD_2022"/>
@@ -5229,15 +5232,24 @@
     <penn_contact pref_year="1978"/>
   </alumni>
   <alumni salesforce_id="0036A00000YeHyWQAV" salutation="Mr" legal_first_name="Dean" preferred_first_name="Dean" legal_middle_name="Neil" legal_last_name="Thompson" initiation_date="1/8/1978" chapter_of_initiation="Minnesota Beta" chapter_of_initiation_roll_number="1065" chapter_of_graduation="Minnesota Beta" undergraduate_chapter_status="Alumnus" mn_beta_all_time="true" mn_beta_alumni_list="true">
+    <alternate_names>
+      <alt_name name="dean n. thompson"/>
+    </alternate_names>
     <phone_numbers>
-      <phone type="preferred_phone_number" number="6517397316" source="foundation"/>
+      <phone type="preferred_phone_number" number="6517397316" source="foundation;penn_contact;penn_feasability;penn_feasability"/>
       <phone type="phone" number="6517397316" source="foundation"/>
       <phone type="home_phone" number="6517397316" source="foundation"/>
-      <phone type="work_phone" number="8004447879" source="foundation"/>
+      <phone type="work_phone" number="8004447879" source="foundation;penn_contact"/>
     </phone_numbers>
     <emails>
-      <email address="thompsod@stifel.com" source="foundation"/>
+      <email address="thompsod@stifel.com" source="foundation;penn_contact;penn_feasability;penn_feasability"/>
     </emails>
+    <penn_contact pref_year="1978"/>
+    <mailing_addresses>
+      <address street="6383 11th St N" city="Oakdale" state="MN" zip="55128-6139" source="penn_contact;penn_feasability;penn_feasability"/>
+    </mailing_addresses>
+    <penn_feasability pcfs_low="NA" pcfs_high="NA"/>
+    <penn_feasability pcfs_low="NA" pcfs_high="NA"/>
   </alumni>
   <alumni salesforce_id="0036A00000YeHyXQAV" salutation="Mr" legal_first_name="James" preferred_first_name="James" legal_middle_name="Thomas" legal_last_name="Williams" suffix="III" initiation_date="5/20/1978" chapter_of_initiation="Minnesota Beta" chapter_of_initiation_roll_number="1066" chapter_of_graduation="Minnesota Beta" undergraduate_chapter_status="Alumnus" primary_country="United States" mn_beta_all_time="true" mn_beta_alumni_list="true" twin_cities_alumni_list="true">
     <phone_numbers>
@@ -5294,6 +5306,9 @@
     <penn_feasability pcfs_low="NA" pcfs_high="NA"/>
   </alumni>
   <alumni salesforce_id="0036A00000YeHycQAF" salutation="Mr" legal_first_name="Theodore" preferred_first_name="Theodore" legal_middle_name="Timot" legal_last_name="Chalgren" initiation_date="5/20/1978" chapter_of_initiation="Minnesota Beta" chapter_of_initiation_roll_number="1071" chapter_of_graduation="Minnesota Beta" undergraduate_chapter_status="Alumnus" primary_country="United States" mn_beta_all_time="true" mn_beta_alumni_list="true" twin_cities_alumni_list="true">
+    <alternate_names>
+      <alt_name name="theodore t. chalgren"/>
+    </alternate_names>
     <phone_numbers>
       <phone type="preferred_phone_number" number="6128882477" source="foundation"/>
       <phone type="work_phone" number="6128882477" source="foundation"/>
@@ -5583,7 +5598,6 @@
       <phone type="preferred_phone_number" number="6128400505" source="foundation;penn_contact;penn_contact;penn_feasability;penn_feasability"/>
       <phone type="phone" number="6128400505" source="foundation"/>
       <phone type="home_phone" number="6128400505" source="foundation"/>
-      <phone type="unknown" number="" source="penn_focus_group"/>
     </phone_numbers>
     <emails>
       <email address="jgabos@yahoo.com" source="foundation;FD_2017;FD_2019"/>
@@ -6007,7 +6021,6 @@
     <phone_numbers>
       <phone type="preferred_phone_number" number="6125742129" source="foundation"/>
       <phone type="work_phone" number="6125742129" source="foundation"/>
-      <phone type="unknown" number="" source="penn_focus_group"/>
       <phone type="home" number="6129616673" source="penn_contact;penn_feasability;penn_feasability"/>
     </phone_numbers>
     <emails>
@@ -6610,6 +6623,9 @@
     </mailing_addresses>
   </alumni>
   <alumni salesforce_id="0036A00000YeS8QQAV" salutation="Mr" legal_first_name="Jeffrey" preferred_first_name="Jeffrey" legal_middle_name="Richard" legal_last_name="Johnson" initiation_date="5/26/1983" chapter_of_initiation="Minnesota Beta" chapter_of_initiation_roll_number="1179" chapter_of_graduation="Minnesota Beta" undergraduate_chapter_status="Alumnus" primary_country="United States" mn_beta_all_time="true" mn_beta_alumni_list="true" twin_cities_alumni_list="true">
+    <alternate_names>
+      <alt_name name="jeffrey r. johnson"/>
+    </alternate_names>
     <phone_numbers>
       <phone type="preferred_phone_number" number="9522101204" source="foundation;penn_contact"/>
       <phone type="phone" number="9522101204" source="foundation"/>
@@ -6983,13 +6999,14 @@
       <phone type="phone" number="9524960167" source="foundation"/>
       <phone type="home_phone" number="9524960167" source="foundation"/>
       <phone type="mobile" number="9523533336" source="penn_contact;penn_feasability"/>
+      <phone type="NA" number="9529564000" source="pkp_reno_interest"/>
     </phone_numbers>
     <emails>
-      <email address="neilandersonmn@gmail.com" source="foundation;penn_contact;penn_feasability;FD_2017;FD_2019"/>
+      <email address="neilandersonmn@gmail.com" source="foundation;penn_contact;penn_feasability;pkp_reno_interest;FD_2017;FD_2019"/>
     </emails>
     <mailing_addresses>
       <address street="429 Summerfield Drive" city="Chanhassen" state="Minnesota" zip="55317" source="foundation"/>
-      <address street="429 Summerfield Dr" city="Chanhassen" state="MN" zip="55317-7647" source="penn_contact;penn_feasability"/>
+      <address street="429 Summerfield Dr" city="Chanhassen" state="MN" zip="55317-7647" source="penn_contact;penn_feasability;pkp_reno_interest"/>
     </mailing_addresses>
     <penn_contact pref_year="1986"/>
     <penn_feasability pcfs_low="NA" pcfs_high="NA"/>
@@ -6997,6 +7014,7 @@
       <alt_name name="Neil Anderson"/>
     </alternate_names>
     <facebook town_hall_attend="Going"/>
+    <pkp_reno help_interest="Yes" donation_interest="Maybe"/>
     <event_attendance FD_2017="true" FD_2019="true"/>
   </alumni>
   <alumni salesforce_id="0036A00000YeSb2QAF" salutation="Mr" legal_first_name="Timothy" preferred_first_name="Timothy" legal_middle_name="Sean" legal_last_name="Gleason" initiation_date="5/31/1986" chapter_of_initiation="Minnesota Beta" chapter_of_initiation_roll_number="1206" chapter_of_graduation="Minnesota Beta" undergraduate_chapter_status="Alumnus" primary_country="United States" mn_beta_all_time="true" mn_beta_alumni_list="true">
@@ -7104,7 +7122,6 @@
       <phone type="phone" number="6128683910" source="foundation"/>
       <phone type="home_phone" number="6128683910" source="foundation"/>
       <phone type="work_phone" number="6126786912" source="foundation;penn_contact;penn_call_status"/>
-      <phone type="unknown" number="" source="penn_focus_group"/>
     </phone_numbers>
     <emails>
       <email address="jpsittko@comcast.net" source="foundation;penn_focus_group;penn_contact;penn_call_status;penn_feasability"/>
@@ -7448,11 +7465,11 @@
   <alumni salesforce_id="0036A00000YeVlUQAV" salutation="Mr" legal_first_name="Eric" preferred_first_name="Eric" legal_middle_name="Thomas" legal_last_name="Henderson" initiation_date="1/5/1990" chapter_of_initiation="Minnesota Beta" chapter_of_initiation_roll_number="1235" chapter_of_graduation="Minnesota Beta" undergraduate_chapter_status="Alumnus" primary_country="United States" mn_beta_all_time="true" mn_beta_alumni_list="true">
     <phone_numbers>
       <phone type="preferred_phone_number" number="5073754771" source="foundation;penn_contact;penn_feasability"/>
-      <phone type="phone" number="5076211454" source="foundation;penn_contact;penn_feasability"/>
+      <phone type="phone" number="5076211454" source="foundation;penn_contact;penn_feasability;pkp_reno_interest"/>
       <phone type="home_phone" number="5076211454" source="foundation"/>
     </phone_numbers>
     <emails>
-      <email address="ehenderson71@gmail.com" source="foundation;penn_contact;penn_feasability"/>
+      <email address="ehenderson71@gmail.com" source="foundation;penn_contact;penn_feasability;pkp_reno_interest"/>
     </emails>
     <mailing_addresses>
       <address street="54046 188th Street" city="Mankato" state="Minnesota" zip="56001" source="foundation"/>
@@ -7464,6 +7481,7 @@
       <alt_name name="Eric Henderson"/>
     </alternate_names>
     <facebook/>
+    <pkp_reno help_interest="No" donation_interest="Maybe"/>
   </alumni>
   <alumni salesforce_id="0036A00000YeVlVQAV" salutation="Mr" legal_first_name="Michael" preferred_first_name="Michael" legal_middle_name="Craig" legal_last_name="Yellen" initiation_date="1/5/1990" chapter_of_initiation="Minnesota Beta" chapter_of_initiation_roll_number="1236" chapter_of_graduation="Minnesota Beta" undergraduate_chapter_status="Alumnus" primary_country="United States" mn_beta_all_time="true" mn_beta_alumni_list="true">
     <emails>
@@ -7527,18 +7545,19 @@
       <phone type="phone" number="6158407222" source="foundation"/>
       <phone type="home_phone" number="6158407222" source="foundation"/>
       <phone type="work_phone" number="6126058825" source="foundation"/>
-      <phone type="unknown" number="" source="penn_focus_group"/>
       <phone type="home" number="9524722621" source="penn_contact;penn_feasability"/>
+      <phone type="NA" number="6128407222" source="pkp_reno_interest"/>
     </phone_numbers>
     <emails>
-      <email address="jbaker@jbaker.org" source="foundation;penn_focus_group;penn_contact;penn_feasability;FD_2016;FD_2019;FD_2022"/>
+      <email address="jbaker@jbaker.org" source="foundation;penn_focus_group;penn_contact;penn_feasability;pkp_reno_interest;FD_2016;FD_2019;FD_2022"/>
       <email address="jpsittko@comcast.net" source="focus_group"/>
       <email address="jbaker@mnfamily.org" source="FD_2020"/>
     </emails>
     <mailing_addresses>
       <address street="1784 Jones Ln." city="Mound" state="Minnesota" zip="55364-1129" source="foundation"/>
       <address street="1784 Jones Ln" city="Mound" state="MN" zip="55364-1129" source="penn_contact;penn_feasability"/>
-      <address street="&quot;1161 E Wayzata Blvd  #224&quot;" city="" state="Wayzata" zip="MN" source="FD_2016"/>
+      <address street="1161 Wayzata blvd East pmb 224" city="Wayzata" state="MN" zip="55391" source="pkp_reno_interest"/>
+      <address street="1161 E Wayzata Blvd  #224" city="" state="Wayzata" zip="MN" source="FD_2016"/>
     </mailing_addresses>
     <focus_group era="1990's" contact="Jeff"/>
     <penn_focus_group era="1990" committee="Jeff" confirmed="Yes" call_segment="1990s" response="I could make Tuesday 1-3pm Wednesday 2:30-3:30 or Thursday 2-3 work."/>
@@ -7549,6 +7568,7 @@
       <alt_name name="Jason Baker"/>
     </alternate_names>
     <facebook/>
+    <pkp_reno help_interest="Yes" donation_interest="Maybe"/>
     <event_attendance FD_2016="true" FD_2019="true" FD_2020="true" FD_2022="true"/>
   </alumni>
   <alumni salesforce_id="0036A00000YeVlbQAF" salutation="Mr" legal_first_name="David" preferred_first_name="Dave" legal_middle_name="John" legal_last_name="Henrichs" initiation_date="1/6/1991" chapter_of_initiation="Minnesota Beta" chapter_of_initiation_roll_number="1243" chapter_of_graduation="Minnesota Beta" undergraduate_chapter_status="Alumnus" primary_country="United States" mn_beta_all_time="true" mn_beta_alumni_list="true">
@@ -7859,14 +7879,14 @@
   <alumni salesforce_id="0036A00000YeVweQAF" salutation="Mr" legal_first_name="Rohit" preferred_first_name="Ro" legal_middle_name="Arun" legal_last_name="Shirole" initiation_date="4/24/1993" chapter_of_initiation="Minnesota Beta" chapter_of_initiation_roll_number="1262" chapter_of_graduation="Minnesota Beta" undergraduate_chapter_status="Alumnus" primary_country="United States" mn_beta_all_time="true" mn_beta_alumni_list="true" twin_cities_alumni_list="true">
     <phone_numbers>
       <phone type="preferred_phone_number" number="9524760045" source="foundation;penn_contact;penn_call_status;penn_feasability"/>
-      <phone type="phone" number="6127097676" source="foundation;penn_contact;penn_call_status;penn_feasability"/>
+      <phone type="phone" number="6127097676" source="foundation;penn_contact;penn_call_status;penn_feasability;pkp_reno_interest"/>
       <phone type="home_phone" number="6127097676" source="foundation"/>
     </phone_numbers>
     <emails>
-      <email address="roshirole@yahoo.com" source="foundation;penn_contact;penn_call_status;penn_feasability;FD_2016"/>
+      <email address="roshirole@yahoo.com" source="foundation;penn_contact;penn_call_status;penn_feasability;pkp_reno_interest;FD_2016"/>
     </emails>
     <mailing_addresses>
-      <address street="17510 County Road 101 W" city="Wayzata" state="Minnesota" zip="55391-2862" source="foundation;penn_contact;penn_call_status;penn_feasability"/>
+      <address street="17510 County Road 101 W" city="Wayzata" state="Minnesota" zip="55391-2862" source="foundation;penn_contact;penn_call_status;penn_feasability;pkp_reno_interest"/>
     </mailing_addresses>
     <penn_contact pref_year="1993"/>
     <penn_call_status status="Interviewed-By Video"/>
@@ -7875,6 +7895,7 @@
       <alt_name name="Ro Shirole"/>
     </alternate_names>
     <facebook town_hall_attend="Going"/>
+    <pkp_reno help_interest="Yes" donation_interest="Yes"/>
     <event_attendance FD_2016="true"/>
   </alumni>
   <alumni salesforce_id="0036A00000YeVwfQAF" salutation="Mr" legal_first_name="Bret" preferred_first_name="Bret" legal_middle_name="E." legal_last_name="Tupper" initiation_date="4/24/1993" chapter_of_initiation="Minnesota Beta" chapter_of_initiation_roll_number="1263" chapter_of_graduation="Minnesota Beta" undergraduate_chapter_status="Alumnus" primary_country="United States" mn_beta_all_time="true" mn_beta_alumni_list="true" twin_cities_alumni_list="true">
@@ -8342,7 +8363,6 @@
       <phone type="phone" number="9525445501" source="foundation"/>
       <phone type="home_phone" number="9525445501" source="foundation"/>
       <phone type="work_phone" number="9525445501" source="foundation"/>
-      <phone type="unknown" number="" source="penn_focus_group"/>
       <phone type="mobile" number="6127169713" source="penn_contact;penn_call_status;penn_feasability"/>
     </phone_numbers>
     <emails>
@@ -8534,14 +8554,18 @@
     <penn_feasability pcfs_low="NA" pcfs_high="NA"/>
   </alumni>
   <alumni salesforce_id="0036A00000YeXCIQA3" legal_first_name="Eric" preferred_first_name="Eric" legal_middle_name="Bruce" legal_last_name="Nelson" initiation_date="10/2/1999" chapter_of_initiation="Minnesota Beta" chapter_of_initiation_roll_number="1313" chapter_of_graduation="Minnesota Beta" undergraduate_chapter_status="Alumnus" primary_country="United States" mn_beta_all_time="true" mn_beta_alumni_list="true">
+    <alternate_names>
+      <alt_name name="eric b. nelson"/>
+    </alternate_names>
     <phone_numbers>
-      <phone type="preferred_phone_number" number="5072850378" source="foundation"/>
+      <phone type="preferred_phone_number" number="5072850378" source="foundation;penn_contact"/>
       <phone type="phone" number="5072850378" source="foundation"/>
       <phone type="home_phone" number="5072850378" source="foundation"/>
     </phone_numbers>
     <mailing_addresses>
-      <address street="2352 Weston Pl SW" city="Rochester" state="Minnesota" zip="55902-1337" source="foundation"/>
+      <address street="2352 Weston Pl SW" city="Rochester" state="Minnesota" zip="55902-1337" source="foundation;penn_contact"/>
     </mailing_addresses>
+    <penn_contact pref_year="1999"/>
   </alumni>
   <alumni salesforce_id="0036A00000YeXCJQA3" legal_first_name="Matthew" preferred_first_name="Matthew" legal_middle_name="Charles" legal_last_name="Mitchell" initiation_date="10/2/1999" chapter_of_initiation="Minnesota Beta" chapter_of_initiation_roll_number="1314" chapter_of_graduation="Minnesota Beta" undergraduate_chapter_status="Alumnus" primary_country="United States" mn_beta_all_time="true" mn_beta_alumni_list="true" twin_cities_alumni_list="true">
     <phone_numbers>
@@ -9402,6 +9426,10 @@
     <facebook/>
   </alumni>
   <alumni salesforce_id="0036A00000YeZH1QAN" legal_first_name="Sean" preferred_first_name="Sean" legal_middle_name="Robert" legal_last_name="O'Rourke" initiation_date="11/12/2004" chapter_of_initiation="Minnesota Beta" chapter_of_initiation_roll_number="1381" chapter_of_graduation="Minnesota Beta" undergraduate_chapter_status="Alumnus" primary_country="United States" mn_beta_all_time="true" mn_beta_alumni_list="true" twin_cities_alumni_list="true">
+    <alternate_names>
+      <alt_name name="sean oh"/>
+      <alt_name name="Sean Oh"/>
+    </alternate_names>
     <phone_numbers>
       <phone type="preferred_phone_number" number="7635722687" source="foundation"/>
       <phone type="phone" number="7632269691" source="foundation"/>
@@ -9413,6 +9441,7 @@
     <mailing_addresses>
       <address street="5300 Matterhorn Dr" city="Fridley" state="Minnesota" zip="55421" source="foundation"/>
     </mailing_addresses>
+    <facebook/>
   </alumni>
   <alumni salesforce_id="0036A00000YeZH0QAN" legal_first_name="Bryan" preferred_first_name="Bryan" legal_middle_name="Ronald" legal_last_name="Taylor" initiation_date="11/12/2004" chapter_of_initiation="Minnesota Beta" chapter_of_initiation_roll_number="1382" chapter_of_graduation="Minnesota Beta" undergraduate_chapter_status="Alumnus" primary_country="United States" mn_beta_all_time="true" mn_beta_alumni_list="true">
     <phone_numbers>
@@ -9473,26 +9502,26 @@
   </alumni>
   <alumni salesforce_id="0036A00000YeZb8QAF" legal_first_name="Joseph" preferred_first_name="Joey" legal_middle_name="Ryan" legal_last_name="Taralson" initiation_date="4/22/2005" chapter_of_initiation="Minnesota Beta" chapter_of_initiation_roll_number="1386" chapter_of_graduation="Minnesota Beta" undergraduate_chapter_status="Alumnus" mn_beta_all_time="true" mn_beta_alumni_list="true">
     <phone_numbers>
-      <phone type="preferred_phone_number" number="6127028304" source="foundation;penn_contact;penn_feasability"/>
+      <phone type="preferred_phone_number" number="6127028304" source="foundation;penn_contact;penn_feasability;pkp_reno_interest"/>
       <phone type="phone" number="6127028304" source="foundation"/>
       <phone type="home_phone" number="6127028304" source="foundation"/>
-      <phone type="unknown" number="" source="penn_focus_group"/>
     </phone_numbers>
     <emails>
-      <email address="jrtaralson@gmail.com" source="foundation;focus_group;penn_focus_group;penn_contact;penn_feasability;FD_2016;FD_2017;FD_2019;FD_2020"/>
+      <email address="jrtaralson@gmail.com" source="foundation;focus_group;penn_focus_group;penn_contact;penn_feasability;pkp_reno_interest;FD_2016;FD_2017;FD_2019;FD_2020"/>
     </emails>
     <focus_group era="2005's" contact="Tom"/>
     <penn_focus_group era="2005" committee="Tom" confirmed="Yes" call_segment="2000s" response="Friday preferred"/>
     <penn_era initiation="2005" who="Tom" prospect_list="No"/>
     <penn_contact pref_year="2005"/>
     <mailing_addresses>
-      <address street="55 Idaho Ave N" city="Golden Valley" state="MN" zip="55427-4929" source="penn_contact;penn_feasability;FD_2019"/>
+      <address street="55 Idaho Ave N" city="Golden Valley" state="MN" zip="55427-4929" source="penn_contact;penn_feasability;pkp_reno_interest;FD_2019"/>
     </mailing_addresses>
     <penn_feasability pcfs_rank="survey recipient" status="survey filled" interview_date="7/26/2021" pcfs_low="$2500" pcfs_high="$2500"/>
     <alternate_names>
       <alt_name name="Joey Taralson"/>
     </alternate_names>
     <facebook/>
+    <pkp_reno help_interest="No" donation_interest="Yes"/>
     <event_attendance FD_2016="true" FD_2017="true" FD_2019="true" FD_2020="true"/>
   </alumni>
   <alumni salesforce_id="0036A00000YeZb3QAF" salutation="Mr" legal_first_name="George" preferred_first_name="Alec" legal_middle_name="Alec" legal_last_name="Catsuros" initiation_date="4/22/2005" chapter_of_initiation="Minnesota Beta" chapter_of_initiation_roll_number="1387" chapter_of_graduation="Minnesota Beta" undergraduate_chapter_status="Alumnus" primary_country="United States" mn_beta_all_time="true" mn_beta_alumni_list="true" twin_cities_alumni_list="true">
@@ -9646,7 +9675,7 @@
   <alumni salesforce_id="0036A00000YeZueQAF" legal_first_name="Dean" preferred_first_name="Dean" legal_middle_name="Wickham" legal_last_name="George" initiation_date="12/9/2005" chapter_of_initiation="Minnesota Beta" chapter_of_initiation_roll_number="1399" chapter_of_graduation="Minnesota Beta" undergraduate_chapter_status="Alumnus" primary_country="United States" mn_beta_all_time="true" mn_beta_alumni_list="true" twin_cities_alumni_list="true">
     <phone_numbers>
       <phone type="preferred_phone_number" number="5072815075" source="foundation"/>
-      <phone type="phone" number="" source="foundation;penn_focus_group"/>
+      <phone type="phone" number="" source="foundation"/>
       <phone type="home_phone" number="" source="foundation"/>
     </phone_numbers>
     <emails>
@@ -9778,19 +9807,21 @@
   <alumni salesforce_id="0036A00000YealVQAR" legal_first_name="Joshua" preferred_first_name="Josh" legal_middle_name="Tyler" legal_last_name="Mortensen" initiation_date="4/21/2006" chapter_of_initiation="Minnesota Beta" chapter_of_initiation_roll_number="1408" chapter_of_graduation="Minnesota Beta" undergraduate_chapter_status="Alumnus" primary_country="United States" mn_beta_all_time="true" mn_beta_alumni_list="true">
     <phone_numbers>
       <phone type="preferred_phone_number" number="9137211381" source="foundation"/>
-      <phone type="phone" number="9137073170" source="foundation"/>
+      <phone type="phone" number="9137073170" source="foundation;pkp_reno_interest"/>
       <phone type="home_phone" number="9137073170" source="foundation"/>
     </phone_numbers>
     <emails>
-      <email address="joshua.t.mortensen@gmail.com" source="foundation"/>
+      <email address="joshua.t.mortensen@gmail.com" source="foundation;pkp_reno_interest"/>
     </emails>
     <mailing_addresses>
       <address street="935 Washington St Apt 201" city="Kansas City" state="Missouri" zip="64105-2258" source="foundation"/>
+      <address street="451 W 10th St" city="Kansas City" state="MO" zip="64105" source="pkp_reno_interest"/>
     </mailing_addresses>
     <alternate_names>
       <alt_name name="Josh Mortensen"/>
     </alternate_names>
     <facebook/>
+    <pkp_reno help_interest="Yes" donation_interest="Maybe"/>
   </alumni>
   <alumni salesforce_id="0036A00000YealZQAR" salutation="Mr" legal_first_name="Timothy" preferred_first_name="TJ" legal_middle_name="John" legal_last_name="Pelanek" suffix="II" initiation_date="4/21/2006" chapter_of_initiation="Minnesota Beta" chapter_of_initiation_roll_number="1409" chapter_of_graduation="Minnesota Beta" undergraduate_chapter_status="Alumnus" primary_country="United States" mn_beta_all_time="true" mn_beta_alumni_list="true">
     <phone_numbers>
@@ -10403,7 +10434,6 @@
       <phone type="preferred_phone_number" number="4692716387" source="foundation"/>
       <phone type="phone" number="4692716387" source="foundation"/>
       <phone type="home_phone" number="4692716387" source="foundation"/>
-      <phone type="unknown" number="" source="penn_focus_group"/>
     </phone_numbers>
     <emails>
       <email address="logantvoelker@gmail.com" source="foundation;penn_focus_group"/>
@@ -11631,6 +11661,10 @@
     <facebook/>
   </alumni>
   <alumni salesforce_id="0036A00000YeeLrQAJ" legal_first_name="Andrew" preferred_first_name="Andrew" legal_last_name="Fink" initiation_date="4/20/2013" chapter_of_initiation="Minnesota Beta" chapter_of_initiation_roll_number="1537" chapter_of_graduation="Minnesota Beta" undergraduate_chapter_status="Alumnus" primary_country="United States" mn_beta_all_time="true" mn_beta_alumni_list="true" twin_cities_alumni_list="true">
+    <alternate_names>
+      <alt_name name="andrew 2013 fink"/>
+      <alt_name name="Andrew 2013 Fink"/>
+    </alternate_names>
     <phone_numbers>
       <phone type="preferred_phone_number" number="6123256449" source="foundation"/>
       <phone type="phone" number="6123256449" source="foundation"/>
@@ -11642,9 +11676,6 @@
     <mailing_addresses>
       <address street="5013 W 56 Street" city="Edina" state="Minnesota" zip="55436" source="foundation"/>
     </mailing_addresses>
-    <alternate_names>
-      <alt_name name="Andrew Fink"/>
-    </alternate_names>
     <facebook/>
   </alumni>
   <alumni salesforce_id="0036A00000YefKrQAJ" legal_first_name="Zachary" preferred_first_name="Zach" legal_middle_name="James" legal_last_name="Haus" initiation_date="4/20/2013" chapter_of_initiation="Minnesota Beta" chapter_of_initiation_roll_number="1538" chapter_of_graduation="Minnesota Beta" undergraduate_chapter_status="Alumnus" mn_beta_all_time="true" mn_beta_alumni_list="true">
@@ -11812,9 +11843,10 @@
       <phone type="preferred_phone_number" number="2155002818" source="foundation"/>
       <phone type="phone" number="2155002818" source="foundation"/>
       <phone type="home_phone" number="2155002818" source="foundation"/>
+      <phone type="NA" number="2145002818" source="pkp_reno_interest"/>
     </phone_numbers>
     <emails>
-      <email address="cookx775@umn.edu" source="foundation;FD_2019"/>
+      <email address="cookx775@umn.edu" source="foundation;pkp_reno_interest;FD_2019"/>
     </emails>
     <mailing_addresses>
       <address street="7000 WESTVIEW DR APT 110" city="HOUSTON" state="Texas" zip="77055-6964" source="foundation"/>
@@ -11823,6 +11855,7 @@
       <alt_name name="Dalton Cook"/>
     </alternate_names>
     <facebook town_hall_attend="Going"/>
+    <pkp_reno help_interest="Yes" donation_interest="Maybe"/>
     <event_attendance FD_2019="true"/>
   </alumni>
   <alumni salesforce_id="0036A00000Yeez5QAB" legal_first_name="Samuel" preferred_first_name="Sam" legal_middle_name="James" legal_last_name="McCartney" initiation_date="11/15/2013" chapter_of_initiation="Minnesota Beta" chapter_of_initiation_roll_number="1549" chapter_of_graduation="Minnesota Beta" undergraduate_chapter_status="Alumnus" primary_country="United States" mn_beta_all_time="true" mn_beta_alumni_list="true">
@@ -12423,22 +12456,24 @@
   </alumni>
   <alumni salesforce_id="0036A00000YegZEQAZ" legal_first_name="Michael" preferred_first_name="Mike" legal_middle_name="William" legal_last_name="McGreal" initiation_date="12/4/2014" chapter_of_initiation="Minnesota Beta" chapter_of_initiation_roll_number="1607" chapter_of_graduation="Minnesota Beta" undergraduate_chapter_status="Alumnus" primary_country="United States" mn_beta_all_time="true" mn_beta_alumni_list="true">
     <phone_numbers>
-      <phone type="preferred_phone_number" number="7738951782" source="foundation"/>
+      <phone type="preferred_phone_number" number="7738951782" source="foundation;pkp_reno_interest"/>
       <phone type="phone" number="7738951782" source="foundation"/>
       <phone type="home_phone" number="7738951782" source="foundation"/>
     </phone_numbers>
     <emails>
       <email address="mcgre155@umn.edu" source="foundation"/>
-      <email address="mmcgreal18@gmail.com" source="FD_2019"/>
+      <email address="mmcgreal18@gmail.com" source="pkp_reno_interest;FD_2019"/>
     </emails>
     <mailing_addresses>
       <address street="615 Dalton Place" city="Northbrook" state="Illinois" zip="60062" source="foundation"/>
-      <address street="&quot;615 Dalton Place  Northbrook" city=" IL&quot;" state="" zip="Northbrook" source="FD_2019"/>
+      <address street="615 Dalton Pl" city="Northbrook" state="IL" zip="60062" source="pkp_reno_interest"/>
+      <address street="615 Dalton Place  Northbrook" city=" IL" state="" zip="Northbrook" source="FD_2019"/>
     </mailing_addresses>
     <alternate_names>
       <alt_name name="Mike McGreal"/>
     </alternate_names>
     <facebook town_hall_attend="Going"/>
+    <pkp_reno help_interest="Yes" donation_interest="Yes"/>
     <event_attendance FD_2019="true"/>
   </alumni>
   <alumni salesforce_id="0036A00000YegZ5QAJ" legal_first_name="Joseph" preferred_first_name="Joey" legal_middle_name="John" legal_last_name="Nelson" initiation_date="12/4/2014" chapter_of_initiation="Minnesota Beta" chapter_of_initiation_roll_number="1608" chapter_of_graduation="Minnesota Beta" undergraduate_chapter_status="Alumnus" primary_country="United States" mn_beta_all_time="true" mn_beta_alumni_list="true" twin_cities_alumni_list="true">
@@ -12478,12 +12513,13 @@
   </alumni>
   <alumni salesforce_id="0036A00000YegZ9QAJ" legal_first_name="Nicolas" preferred_first_name="Nico" legal_last_name="Suarez" initiation_date="12/4/2014" chapter_of_initiation="Minnesota Beta" chapter_of_initiation_roll_number="1610" chapter_of_graduation="Minnesota Beta" undergraduate_chapter_status="Alumnus" primary_country="United States" mn_beta_all_time="true" mn_beta_alumni_list="true">
     <phone_numbers>
-      <phone type="preferred_phone_number" number="5072610515" source="foundation"/>
+      <phone type="preferred_phone_number" number="5072610515" source="foundation;pkp_reno_interest"/>
       <phone type="phone" number="5072610515" source="foundation"/>
       <phone type="home_phone" number="5072610515" source="foundation"/>
     </phone_numbers>
     <emails>
       <email address="suare043@umn.edu" source="foundation"/>
+      <email address="suarez.nico27@gmail.com" source="pkp_reno_interest"/>
     </emails>
     <mailing_addresses>
       <address street="920 N HERMITAGE AVE # 2" city="CHICAGO" state="Illinois" zip="60622-5002" source="foundation"/>
@@ -12492,6 +12528,7 @@
       <alt_name name="Nico Suarez"/>
     </alternate_names>
     <facebook town_hall_attend="Maybe"/>
+    <pkp_reno help_interest="Yes" donation_interest="Yes"/>
   </alumni>
   <alumni salesforce_id="0036A00000YegZ7QAJ" legal_first_name="Kevin" preferred_first_name="Kevin" legal_middle_name="Le" legal_last_name="Nguyen" initiation_date="12/4/2014" chapter_of_initiation="Minnesota Beta" chapter_of_initiation_roll_number="1611" chapter_of_graduation="Minnesota Beta" undergraduate_chapter_status="Alumnus" primary_country="United States" mn_beta_all_time="true" mn_beta_alumni_list="true" twin_cities_alumni_list="true">
     <phone_numbers>
@@ -12587,12 +12624,12 @@
   </alumni>
   <alumni salesforce_id="0036A00000YegZFQAZ" legal_first_name="Andrew" preferred_first_name="Andrew" legal_last_name="Zobel" initiation_date="12/4/2014" chapter_of_initiation="Minnesota Beta" chapter_of_initiation_roll_number="1616" chapter_of_graduation="Minnesota Beta" undergraduate_chapter_status="Alumnus" primary_country="United States" mn_beta_all_time="true" mn_beta_alumni_list="true" twin_cities_alumni_list="true">
     <phone_numbers>
-      <phone type="preferred_phone_number" number="6513155412" source="foundation"/>
+      <phone type="preferred_phone_number" number="6513155412" source="foundation;pkp_reno_interest"/>
       <phone type="phone" number="6513155412" source="foundation"/>
       <phone type="home_phone" number="6513155412" source="foundation"/>
     </phone_numbers>
     <emails>
-      <email address="azobel58@gmail.com" source="foundation;FD_2020;FD_2022"/>
+      <email address="azobel58@gmail.com" source="foundation;pkp_reno_interest;FD_2020;FD_2022"/>
     </emails>
     <mailing_addresses>
       <address street="3809 CHASE AVE" city="ANOKA" state="Minnesota" zip="55303-8310" source="foundation"/>
@@ -12601,6 +12638,7 @@
       <alt_name name="Andrew Zobel"/>
     </alternate_names>
     <facebook town_hall_attend="Going"/>
+    <pkp_reno help_interest="Yes" donation_interest="Yes"/>
     <event_attendance FD_2020="true" FD_2022="true"/>
   </alumni>
   <alumni salesforce_id="0036A00000YegZDQAZ" legal_first_name="Ian" preferred_first_name="Ian" legal_middle_name="Russell" legal_last_name="Nykaza" initiation_date="12/4/2014" chapter_of_initiation="Minnesota Beta" chapter_of_initiation_roll_number="1617" chapter_of_graduation="Minnesota Beta" undergraduate_chapter_status="Alumnus" primary_country="United States" mn_beta_all_time="true" mn_beta_alumni_list="true">
@@ -13828,20 +13866,21 @@
   </alumni>
   <alumni salesforce_id="0036A00000Yei0cQAB" legal_first_name="Andrew" preferred_first_name="Andrew" legal_middle_name="Michael" legal_last_name="LaFortune" initiation_date="1/19/2018" chapter_of_initiation="Minnesota Beta" chapter_of_initiation_roll_number="1690" chapter_of_graduation="Minnesota Beta" undergraduate_chapter_status="Alumnus" primary_country="United States" mn_beta_all_time="true" mn_beta_alumni_list="true">
     <phone_numbers>
-      <phone type="preferred_phone_number" number="9522702310" source="foundation"/>
+      <phone type="preferred_phone_number" number="9522702310" source="foundation;pkp_reno_interest"/>
       <phone type="phone" number="9522702310" source="foundation"/>
       <phone type="home_phone" number="9522702310" source="foundation"/>
     </phone_numbers>
     <emails>
-      <email address="lafor038@umn.edu" source="foundation;FD_2022"/>
+      <email address="lafor038@umn.edu" source="foundation;pkp_reno_interest;FD_2022"/>
     </emails>
     <mailing_addresses>
-      <address street="4649 Island View Drive" city="Mound" state="Minnesota" zip="55364" source="foundation"/>
+      <address street="4649 Island View Drive" city="Mound" state="Minnesota" zip="55364" source="foundation;pkp_reno_interest"/>
     </mailing_addresses>
     <alternate_names>
       <alt_name name="Andrew LaFortune"/>
     </alternate_names>
     <facebook town_hall_attend="Going"/>
+    <pkp_reno help_interest="No" donation_interest="Maybe"/>
     <event_attendance FD_2022="true"/>
   </alumni>
   <alumni salesforce_id="0036A00000Yei0YQAR" legal_first_name="Samuel" preferred_first_name="Sam" legal_middle_name="Richard" legal_last_name="Niefeld" initiation_date="1/19/2018" chapter_of_initiation="Minnesota Beta" chapter_of_initiation_roll_number="1691" chapter_of_graduation="Minnesota Beta" undergraduate_chapter_status="Alumnus" primary_country="United States" mn_beta_all_time="true" mn_beta_alumni_list="true" twin_cities_alumni_list="true">
@@ -13863,20 +13902,22 @@
   </alumni>
   <alumni salesforce_id="0036A00000Yei0eQAB" legal_first_name="Tyler" preferred_first_name="Tyler" legal_middle_name="Christopher" legal_last_name="Johnson" initiation_date="1/19/2018" chapter_of_initiation="Minnesota Beta" chapter_of_initiation_roll_number="1692" chapter_of_graduation="Minnesota Beta" undergraduate_chapter_status="Alumnus" primary_country="United States" mn_beta_all_time="true" mn_beta_alumni_list="true" twin_cities_alumni_list="true">
     <phone_numbers>
-      <phone type="preferred_phone_number" number="2625276448" source="foundation"/>
+      <phone type="preferred_phone_number" number="2625276448" source="foundation;pkp_reno_interest"/>
       <phone type="phone" number="2625276448" source="foundation"/>
       <phone type="home_phone" number="2625276448" source="foundation"/>
     </phone_numbers>
     <emails>
-      <email address="tylercjohnson16@gmail.com" source="foundation;FD_2022"/>
+      <email address="tylercjohnson16@gmail.com" source="foundation;pkp_reno_interest;FD_2022"/>
     </emails>
     <mailing_addresses>
       <address street="205 Park Ave. Apt. 214" city="Minneapolis" state="Minnesota" zip="55415" source="foundation"/>
+      <address street="205 Park Ave. Unit 214" city="Minneapolis" state="MN" zip="55415" source="pkp_reno_interest"/>
     </mailing_addresses>
     <alternate_names>
       <alt_name name="Tyler Johnson"/>
     </alternate_names>
     <facebook/>
+    <pkp_reno help_interest="Yes" donation_interest="Maybe"/>
     <event_attendance FD_2022="true"/>
   </alumni>
   <alumni salesforce_id="0036A00000Yei0bQAB" legal_first_name="Ryan" preferred_first_name="Ryan" legal_middle_name="Thomas" legal_last_name="Devoe" initiation_date="1/19/2018" chapter_of_initiation="Minnesota Beta" chapter_of_initiation_roll_number="1693" chapter_of_graduation="Minnesota Beta" undergraduate_chapter_status="Alumnus" primary_country="United States" mn_beta_all_time="true" mn_beta_alumni_list="true" twin_cities_alumni_list="true">
@@ -14074,6 +14115,10 @@
     <event_attendance FD_2022="true"/>
   </alumni>
   <alumni salesforce_id="0036A00000Yei1PQAR" legal_first_name="Michael" preferred_first_name="Michael" legal_middle_name="Thomas" legal_last_name="Johnson" initiation_date="1/19/2018" chapter_of_initiation="Minnesota Beta" chapter_of_initiation_roll_number="1704" chapter_of_graduation="Minnesota Beta" undergraduate_chapter_status="Alumnus" primary_country="United States" mn_beta_all_time="true" mn_beta_alumni_list="true" twin_cities_alumni_list="true">
+    <alternate_names>
+      <alt_name name="michael t. johnson"/>
+      <alt_name name="Michael T. Johnson"/>
+    </alternate_names>
     <phone_numbers>
       <phone type="preferred_phone_number" number="6123664482" source="foundation"/>
       <phone type="phone" number="6123664482" source="foundation"/>
@@ -14085,9 +14130,6 @@
     <mailing_addresses>
       <address street="8320 Kelzer Pond Drive" city="Victoria" state="Minnesota" zip="55386" source="foundation"/>
     </mailing_addresses>
-    <alternate_names>
-      <alt_name name="Michael Johnson"/>
-    </alternate_names>
     <facebook town_hall_attend="Maybe"/>
   </alumni>
   <alumni salesforce_id="0036A00000Yei0lQAB" legal_first_name="Maxwel" preferred_first_name="Max" legal_middle_name="Daniel" legal_last_name="Fagan" initiation_date="1/19/2018" chapter_of_initiation="Minnesota Beta" chapter_of_initiation_roll_number="1705" chapter_of_graduation="Minnesota Beta" undergraduate_chapter_status="Alumnus" primary_country="United States" mn_beta_all_time="true" mn_beta_alumni_list="true" twin_cities_alumni_list="true">
@@ -19918,12 +19960,17 @@
     </mailing_addresses>
   </alumni>
   <alumni salesforce_id="0036A00000YeaLSQAZ" legal_first_name="Jeremy" preferred_first_name="Jeremy" legal_last_name="Petrowski" chapter_of_initiation="Minnesota Delta" initiation_date="11/18/2006" chapter_of_graduation="Minnesota Delta" undergraduate_chapter_status="Alumnus" mn_gamm_mn_delta_2022="true">
+    <alternate_names>
+      <alt_name name="jp squared"/>
+      <alt_name name="JP Squared"/>
+    </alternate_names>
     <phone_numbers>
       <phone type="preferred_phone_number" number="2182601811" source="foundation"/>
     </phone_numbers>
     <emails>
       <email address="jmpetrowski@hotmail.com" source="foundation"/>
     </emails>
+    <facebook/>
   </alumni>
   <alumni salesforce_id="0036A00000YeQh2QAF" legal_first_name="Dale" preferred_first_name="Dale" legal_last_name="Phillips" chapter_of_initiation="Minnesota Gamma" initiation_date="12/5/1981" chapter_of_graduation="Minnesota Gamma" undergraduate_chapter_status="Alumnus" mn_gamm_mn_delta_2022="true">
     <phone_numbers>
@@ -21062,18 +21109,7 @@
   <alumni salesforce_id="0036A00000YeUqYQAV" legal_first_name="Dean" preferred_first_name="Dean" legal_last_name="Thompson" chapter_of_initiation="Minnesota Gamma" initiation_date="1/11/1992" chapter_of_graduation="Minnesota Gamma" undergraduate_chapter_status="Alumnus" mn_gamm_mn_delta_2022="true">
     <mailing_addresses>
       <address street="PO Box 621686" city="Las Vegas" state="Nevada" zip="89162-1686" source="foundation"/>
-      <address street="6383 11th St N" city="Oakdale" state="MN" zip="55128-6139" source="penn_contact;penn_feasability;penn_feasability"/>
     </mailing_addresses>
-    <penn_contact pref_year="1978"/>
-    <phone_numbers>
-      <phone type="home" number="6517397316" source="penn_contact;penn_feasability;penn_feasability"/>
-      <phone type="buissness" number="8004447879" source="penn_contact"/>
-    </phone_numbers>
-    <emails>
-      <email address="thompsod@stifel.com" source="penn_contact;penn_feasability;penn_feasability"/>
-    </emails>
-    <penn_feasability pcfs_low="NA" pcfs_high="NA"/>
-    <penn_feasability pcfs_low="NA" pcfs_high="NA"/>
   </alumni>
   <alumni salesforce_id="0036A00000YehnuQAB" legal_first_name="Saiteja" preferred_first_name="Sai" legal_last_name="Thota" chapter_of_initiation="Minnesota Gamma" initiation_date="4/22/2017" chapter_of_graduation="Minnesota Gamma" undergraduate_chapter_status="Alumnus" mn_gamm_mn_delta_2022="true" twin_cities_alumni_list="true">
     <phone_numbers>
@@ -21700,12 +21736,7 @@
   <alumni salesforce_id="0036A00000YeKaeQAF" legal_first_name="Eric" preferred_first_name="Eric" legal_last_name="Nelson" undergraduate_chapter_status="Alumnus" initiation_date="3/17/1974" chapter_of_initiation="Tennessee Delta" chapter_of_graduation="Tennessee Delta" twin_cities_alumni_list="true">
     <mailing_addresses>
       <address street="500 8th Ave. SE" city="Minneapolis" state="Minnesota" zip="55414" source="foundation"/>
-      <address street="2352 Weston Pl SW" city="Rochester" state="MN" zip="55902-1337" source="penn_contact"/>
     </mailing_addresses>
-    <penn_contact pref_year="1999"/>
-    <phone_numbers>
-      <phone type="home" number="5072850378" source="penn_contact"/>
-    </phone_numbers>
   </alumni>
   <alumni salesforce_id="0036A00000YeV5IQAV" legal_first_name="David" preferred_first_name="David" legal_last_name="Pieczkiewicz" undergraduate_chapter_status="Alumnus" initiation_date="4/6/1991" chapter_of_initiation="Ohio Epsilon" chapter_of_graduation="Ohio Epsilon" twin_cities_alumni_list="true">
     <phone_numbers>
@@ -23039,15 +23070,7 @@
   <alumni salesforce_id="0036A00000YeHcQQAV" legal_first_name="Jeffrey" preferred_first_name="Jeffrey" legal_last_name="Anderson" undergraduate_chapter_status="Alumnus" initiation_date="1/1/1969" chapter_of_initiation="New York Epsilon" chapter_of_graduation="New York Epsilon" twin_cities_alumni_list="true">
     <mailing_addresses>
       <address street="6566 France Ave S Ph 3" city="Minneapolis" state="Minnesota" zip="55435-1745" source="foundation"/>
-      <address street="1401 Arcade St" city="Saint Paul" state="MN" zip="55106-1803" source="penn_feasability"/>
     </mailing_addresses>
-    <penn_feasability pcfs_low="NA" pcfs_high="NA"/>
-    <phone_numbers>
-      <phone type="mobile" number="6513299313" source="penn_feasability"/>
-    </phone_numbers>
-    <emails>
-      <email address="andy2555@comcast.net" source="penn_feasability"/>
-    </emails>
   </alumni>
   <alumni salesforce_id="0036A00000YeC0nQAF" legal_first_name="Thomas" preferred_first_name="Thomas" legal_last_name="Schaefer" undergraduate_chapter_status="Alumnus" initiation_date="4/21/1963" chapter_of_initiation="Illinois Alpha" chapter_of_graduation="Illinois Alpha" twin_cities_alumni_list="true">
     <phone_numbers>
