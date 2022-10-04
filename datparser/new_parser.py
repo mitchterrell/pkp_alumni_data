@@ -1252,6 +1252,8 @@ def get_stats(xml_path):
         root.xpath("./alumni[not(@deceased) and @mn_gamm_mn_delta_2022]")
     )
 
+    active_alumn = len(root.xpath("./alumni[not(@deceased) and ./event_attendance]"))
+
     print(f"{'Total Alumni in DB:':<20} {num_alumni:>4}")
 
     print(
@@ -1267,6 +1269,10 @@ def get_stats(xml_path):
     )
     print(
         f"{'MN Gam/Delt Alumni:':<20} {mn_gam_delt_alumn:>4} - {percentage_to_str(mn_gam_delt_alumn,num_alive_alumni):>4}"
+    )
+    print("")
+    print(
+        f"{'Active Alumni:':<20} {active_alumn:>4} - {percentage_to_str(active_alumn,num_alive_alumni):>4} - {percentage_to_str(active_alumn,mn_beta_alumni):>4}"
     )
 
 
