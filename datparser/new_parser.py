@@ -48,6 +48,8 @@ exception_list = {
     "Joe Eff": "Blank profile, should block",
 }
 
+# region Parse and Add Data Section
+
 
 def name_to_xml(first, last):
     unique = f"{first.lower()}_{last.lower()}"
@@ -1016,44 +1018,40 @@ def trim_numbers(assimilated):
             new_num.set("source", ";".join(set(vals[1].split(";"))))
 
 
-def percentage_to_str(num, denom):
-    return f"{(num/denom)*100:.2f}%"
+def create_xml_file(xml_path):
+    print("=== Starting PKP Alumni Data Parsing ===")
+
+    # Parse the foundation data and set some global dictionaries for lookups
+    foundation_xml = parse_foundation()
+    set_dicts(foundation_xml)
+    perform_corrections(foundation_xml)
+    set_dicts(foundation_xml)
+
+    # Add all supporting data types
+    add_misc_data(foundation_xml)
+    add_penn_focus_group(foundation_xml)
+    add_penn_eras(foundation_xml)
+    add_penn_contact(foundation_xml)
+    add_penn_call_status(foundation_xml)
+    add_penn_feasability(foundation_xml)
+    add_facebook_list(foundation_xml)
+    add_pkp_reno_interest(foundation_xml)
+    add_fd_event_attendance(foundation_xml)
+    add_tcaa_event_attendance(foundation_xml)
+
+    # Clean Up the Data (repeat phones, well formatted addresses)
+    trim_numbers(foundation_xml)
+    fix_all_addrs(foundation_xml, R".\new_output\address_fix_best.xml")
+
+    # Dump it to a file
+    xml_to_file(foundation_xml, xml_path)
+
+    print("=== Done Parsing PKP Alumni Data     ===")
 
 
-def get_stats(xml_path):
+# endregion
 
-    tree = ET.parse(xml_path)
-    root = tree.getroot()
-
-    num_alumni = len(root.findall("alumni"))
-    alive_alumni = root.xpath("./alumni[not(@deceased)]")
-    num_alive_alumni = len(alive_alumni)
-    mn_beta_alumni = len(
-        root.xpath("./alumni[not(@deceased) and @mn_beta_alumni_list]")
-    )
-    tcaa_alumn = len(
-        root.xpath("./alumni[not(@deceased) and @twin_cities_alumni_list]")
-    )
-    mn_gam_delt_alumn = len(
-        root.xpath("./alumni[not(@deceased) and @mn_gamm_mn_delta_2022]")
-    )
-
-    print(f"{'Total Alumni in DB:':<20} {num_alumni:>4}")
-
-    print(
-        f"{'Alive Alumni:':<20} {num_alive_alumni:>4} - {percentage_to_str(num_alive_alumni,num_alumni)}"
-    )
-    print("\n== All Subsequent Stats are for Alive Alumni Only ==\n")
-
-    print(
-        f"{'MN Beta Alumni:':<20} {mn_beta_alumni:>4} - {percentage_to_str(mn_beta_alumni,num_alive_alumni):>4}"
-    )
-    print(
-        f"{'TCAA Alumni:':<20} {tcaa_alumn:>4} - {percentage_to_str(tcaa_alumn,num_alive_alumni):>4}"
-    )
-    print(
-        f"{'MN Gam/Delt Alumni:':<20} {mn_gam_delt_alumn:>4} - {percentage_to_str(mn_gam_delt_alumn,num_alive_alumni):>4}"
-    )
+# region Address Logic
 
 
 def normalize_addr(sfid, fname, lname, street, city, state, zip):
@@ -1125,7 +1123,7 @@ def normalize_addr(sfid, fname, lname, street, city, state, zip):
     return temp_addr
 
 
-def test_addr_verificaiton(xml_in):
+def dump_all_alive_addr(xml_in):
     print(len(xml_in.xpath("./alumni[./mailing_addresses and not(@deceased)]")))
 
     all_alumni_xml = ET.Element("alumni_addr")
@@ -1181,40 +1179,120 @@ def test_addr_verificaiton(xml_in):
     xml_to_file(all_alumni_xml, "./new_output/address_fix.xml")
 
 
+def get_og_addr_str(og):
+    return f"{og.get('street')}{og.get('city')}{og.get('state')}{og.get('zip')}"
+
+
+def get_clean_addr_str(cln):
+    return f"{cln.get('addr_1')}{cln.get('addr_2')}{cln.get('city')}{cln.get('state')}{cln.get('zip4')}{cln.get('zip5')}"
+
+
+def fix_all_addrs(foundation_xml, addr_xml_path):
+
+    addr_tree = ET.parse(addr_xml_path)
+    addr_root = addr_tree.getroot()
+
+    addr_dict = {}
+    for almn in addr_root.xpath("./alumni/address"):
+        og = almn.find("original")
+        unique_str = get_og_addr_str(og)
+        addr_dict[unique_str] = almn
+
+    for almn in foundation_xml.xpath("./alumni[not(@deceased)]/mailing_addresses"):
+        new_good_addr_strs = []
+
+        for addr in almn.findall("address"):
+            unique_str = get_og_addr_str(addr)
+
+            fixed_addr_xml = addr_dict[unique_str]
+
+            invalid = fixed_addr_xml.find("original").get("invalid", None)
+
+            if invalid != None:
+                addr.set("invalid", invalid)
+            else:
+                source = addr.get("source")
+                almn.remove(addr)
+
+                new_unique_str = get_clean_addr_str(fixed_addr_xml.find("cleaned"))
+                if new_unique_str not in new_good_addr_strs:
+                    new_good_addr_strs.append(new_unique_str)
+
+                    tmp = ET.SubElement(
+                        almn, "address", fixed_addr_xml.find("cleaned").attrib
+                    )
+                    tmp.set("source", source)
+                    tmp.set("from_usps", "true")
+
+
+# endregion
+
+# region STATS REGION
+
+
+def percentage_to_str(num, denom):
+    return f"{(num/denom)*100:.2f}%"
+
+
+def get_stats(xml_path):
+
+    tree = ET.parse(xml_path)
+    root = tree.getroot()
+
+    num_alumni = len(root.findall("alumni"))
+    alive_alumni = root.xpath("./alumni[not(@deceased)]")
+    num_alive_alumni = len(alive_alumni)
+    mn_beta_alumni = len(
+        root.xpath("./alumni[not(@deceased) and @mn_beta_alumni_list]")
+    )
+    tcaa_alumn = len(
+        root.xpath("./alumni[not(@deceased) and @twin_cities_alumni_list]")
+    )
+    mn_gam_delt_alumn = len(
+        root.xpath("./alumni[not(@deceased) and @mn_gamm_mn_delta_2022]")
+    )
+
+    print(f"{'Total Alumni in DB:':<20} {num_alumni:>4}")
+
+    print(
+        f"{'Alive Alumni:':<20} {num_alive_alumni:>4} - {percentage_to_str(num_alive_alumni,num_alumni)}"
+    )
+    print("\n== All Subsequent Stats are for Alive Alumni Only ==\n")
+
+    print(
+        f"{'MN Beta Alumni:':<20} {mn_beta_alumni:>4} - {percentage_to_str(mn_beta_alumni,num_alive_alumni):>4}"
+    )
+    print(
+        f"{'TCAA Alumni:':<20} {tcaa_alumn:>4} - {percentage_to_str(tcaa_alumn,num_alive_alumni):>4}"
+    )
+    print(
+        f"{'MN Gam/Delt Alumni:':<20} {mn_gam_delt_alumn:>4} - {percentage_to_str(mn_gam_delt_alumn,num_alive_alumni):>4}"
+    )
+
+
+# endregion
+
+
 def main():
-    print("=== Starting PKP Alumni Data Parsing ===")
 
     xml_path = os.path.join("new_output", "assimilated_foundation.xml")
+    do_parse = False
+    dump_addr_data = False
+    get_stats_dat = True
 
-    # get_stats(xml_path)
-    # return
+    # (a) If parsing
+    if do_parse:
+        create_xml_file(xml_path)
 
-    # tree = ET.parse(xml_path)
-    # root = tree.getroot()
+    # (b) If dumping address data
+    if dump_addr_data:
+        tree = ET.parse(xml_path)
+        root = tree.getroot()
+        dump_all_alive_addr(root)
 
-    # test_addr_verificaiton(root)
-    # return
-
-    foundation_xml = parse_foundation()
-    set_dicts(foundation_xml)
-    perform_corrections(foundation_xml)
-    set_dicts(foundation_xml)
-
-    add_misc_data(foundation_xml)
-    add_penn_focus_group(foundation_xml)
-    add_penn_eras(foundation_xml)
-    add_penn_contact(foundation_xml)
-    add_penn_call_status(foundation_xml)
-    add_penn_feasability(foundation_xml)
-    add_facebook_list(foundation_xml)
-    add_pkp_reno_interest(foundation_xml)
-    add_fd_event_attendance(foundation_xml)
-    add_tcaa_event_attendance(foundation_xml)
-
-    # Clean Up the Data
-    trim_numbers(foundation_xml)
-
-    xml_to_file(foundation_xml, xml_path)
+    # (c) If get stats
+    if get_stats_dat:
+        get_stats(xml_path)
 
 
 if __name__ == "__main__":
