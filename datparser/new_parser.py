@@ -1275,6 +1275,31 @@ def get_stats(xml_path):
         f"{'Active Alumni:':<20} {active_alumn:>4} - {percentage_to_str(active_alumn,num_alive_alumni):>4} - {percentage_to_str(active_alumn,mn_beta_alumni):>4}"
     )
 
+    pcfs_almn = root.xpath(
+        "./alumni/penn_feasability[not(@pcfs_low = 'NA') or not(@pcfs_high = 'NA')]"
+    )
+    pcfs_sort = []
+    for a in pcfs_almn:
+        low = a.get("pcfs_low", "NA")
+        high = a.get("pcfs_high", "NA")
+
+        highest = -1
+        if low != "NA":
+            highest = int(low.replace("$", ""))
+        if high != "NA":
+            highest = int(high.replace("$", ""))
+
+        f_name = a.getparent().get("legal_first_name")
+        l_name = a.getparent().get("legal_last_name")
+
+        pcfs_sort.append([highest, f"{f_name} {l_name}"])
+
+        # print(f"{f_name} {l_name} --> ${highest}")
+
+    pcfs_sort.sort(key=lambda x: x[0], reverse=True)
+    for p in pcfs_sort:
+        print(f"{p[1]:>20} --> ${p[0]}")
+
 
 # endregion
 
