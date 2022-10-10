@@ -776,6 +776,63 @@ def add_tcaa_event_attendance(assimilated):
                             )
 
 
+def add_mailchimp_data(assimilated):
+
+    # (a) Parse new data
+
+    mem_exp_path = R".\raw_inputs\mail_chimp_data\members_export"
+
+    clean_data = {
+        l.split(",")[0].lower(): l
+        for l in open(os.path.join(mem_exp_path, "cleaned.csv"), "r").readlines()[1:]
+    }
+    sub_data = {
+        l.split(",")[0].lower(): l
+        for l in open(os.path.join(mem_exp_path, "subscribed.csv"), "r").readlines()[1:]
+    }
+    unsub_data = {
+        l.split(",")[0].lower(): l
+        for l in open(os.path.join(mem_exp_path, "unsubscribed.csv"), "r").readlines()[
+            1:
+        ]
+    }
+
+    # (b) Get all emails from data
+    almn_emails = {
+        x.get("address"): x.getparent().getparent()
+        for x in assimilated.xpath("./alumni/emails/email")
+    }
+
+    missing_clean = [
+        x
+        for x in clean_data.keys()
+        if x not in almn_emails
+        and name_to_xml(clean_data[x].split(",")[1], clean_data[x].split(",")[2])
+        == None
+    ]
+    # still_missing_clean = [x for x in missing_clean.keys() if name_to_xml(missing_clean[x].split(",")[1], missing_clean[x].split(",")[2])]
+    mssing_sub = [
+        x
+        for x in sub_data.keys()
+        if x not in almn_emails
+        and name_to_xml(sub_data[x].split(",")[1], sub_data[x].split(",")[2]) == None
+    ]
+    missing_unsub = [
+        x
+        for x in unsub_data.keys()
+        if x not in almn_emails
+        and name_to_xml(unsub_data[x].split(",")[1], unsub_data[x].split(",")[2])
+        == None
+    ]
+
+    print(f"Len Missing Clean: {len(missing_clean)} / {len(clean_data)}")
+    print(f"Len Missing Sub:   {len(mssing_sub)} / {len(sub_data)}")
+    print(f"Len Missing Unsub: {len(missing_unsub)} / {len(unsub_data)}")
+
+    for s in mssing_sub:
+        print(f"{s} - {sub_data[s].split(',')[1]} {sub_data[s].split(',')[2]}")
+
+
 def perform_corrections(foundation_xml):
     # region Correct Pref and Legal Names
     sfid_dict["0036A00000YeHoyQAF"].set("preferred_first_name", "Andy")
@@ -1038,6 +1095,7 @@ def create_xml_file(xml_path):
     add_pkp_reno_interest(foundation_xml)
     add_fd_event_attendance(foundation_xml)
     add_tcaa_event_attendance(foundation_xml)
+    add_mailchimp_data(foundation_xml)
 
     # Clean Up the Data (repeat phones, well formatted addresses)
     trim_numbers(foundation_xml)
@@ -1310,6 +1368,12 @@ def main():
     do_parse = False
     dump_addr_data = False
     get_stats_dat = True
+
+    # tree = ET.parse(xml_path)
+    # root = tree.getroot()
+    # add_mailchimp_data(root)
+
+    # return
 
     # (a) If parsing
     if do_parse:
