@@ -1,0 +1,14 @@
+cob@rti.org --> Jeff Coburn said he liked the newletter
+--> Check email responses?
+
+=========
+
+Next Steps:
+(1) Add mailchimp Data
+(a) Updated contact info
+(b) Validated emails
+(c) ETC.
+(2) Validate contact information
+(a) Validate Phone # w/ Twilio Validate API
+(b) Address validation with NCOA processing
+(c) This has it all https://www.edq.com/free-trial/
