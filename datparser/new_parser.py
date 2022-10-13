@@ -832,6 +832,25 @@ def add_mailchimp_data(assimilated):
     for s in mssing_sub:
         print(f"{s} - {sub_data[s].split(',')[1]} {sub_data[s].split(',')[2]}")
 
+    for m_dat in [
+        [clean_data, "bounced_email"],
+        [sub_data, "subscribed"],
+        [unsub_data, "unsubscribed"],
+    ]:
+        m_chimp_dict = m_dat[0]
+        m_chimp_str = m_dat[1]
+        for email, line in m_chimp_dict.items():
+            almn_xml = almn_emails.get(email, None)
+            if almn_xml == None:
+                almn_xml = name_to_xml(line.split(",")[1], line.split(",")[2])
+            if almn_xml == None:
+                continue
+
+            add_email_or_update_source(almn_xml, email, "mailchimp")
+            m_chimp_xml = ET.SubElement(almn_xml, "mailchimp")
+            m_chimp_xml.set("status", m_chimp_str)
+            m_chimp_xml.set("rating", line.split(",")[4])
+
 
 def perform_corrections(foundation_xml):
     # region Correct Pref and Legal Names
@@ -1365,9 +1384,9 @@ def get_stats(xml_path):
 def main():
 
     xml_path = os.path.join("new_output", "assimilated_foundation.xml")
-    do_parse = False
+    do_parse = True
     dump_addr_data = False
-    get_stats_dat = True
+    get_stats_dat = False
 
     # tree = ET.parse(xml_path)
     # root = tree.getroot()
