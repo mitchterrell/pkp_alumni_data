@@ -153,10 +153,97 @@ def mailchimp_update():
                 )
 
 
+def emails_for_tom():
+
+    purchased_emails = []
+    purchased_names = []
+
+    with open(R"C:\Users\mitch\Downloads\fd_2023_sales_so_far.csv", "r") as f:
+
+        for line in f.readlines()[1:]:
+            split_vals = line.replace('"', "").split(",")
+
+            f_name = split_vals[16].lower()
+            l_name = split_vals[17].lower()
+            email = split_vals[18].lower()
+
+            purchased_emails.append(email)
+            purchased_names.append(f"{f_name}_{l_name}")
+
+    tree = ET.parse("./new_output/assimilated_foundation.xml")
+    root = tree.getroot()
+    fd_contacts = root.xpath(
+        "./alumni/event_attendance[@FD_2016 or @FD_2017 or @FD_2019 or @FD_2020 or @FD_2022]"
+    )
+
+    with open("C:/users/mitch/Downloads/fd_emails_for_tom.csv", "w") as f:
+
+        header = "First Name,Last Name,Email #1,Email #2, Email #3,Email #4,FD 2016,FD 2017,FD 2019,FD 2020,FD 2022,Already Purchased\n"
+        f.write(header)
+
+        for fd in fd_contacts:
+            bought_ticket = False
+
+            par = fd.getparent()
+
+            f_name = par.get("preferred_first_name")
+            l_name = par.get("legal_last_name")
+
+            if f"{f_name.lower()}_{l_name.lower()}" in purchased_names:
+                print(f"No Use: {f_name} {l_name}")
+                bought_ticket = True
+                # continue
+
+            if datetime.strptime(
+                par.get("initiation_date"), "%m/%d/%Y"
+            ) < datetime.strptime("01/01/1970", "%m/%d/%Y"):
+                print(
+                    f"WARNING: {f_name} {l_name} initiated on {par.get('initiation_date')}"
+                )
+                continue
+
+            emails = [
+                [x.get("address"), x.get("source")]
+                for x in fd.getparent().findall("emails/email")
+            ]
+            emails.sort(key=lambda x: len(x[1]), reverse=True)
+
+            FD_2016 = "FD_2016" in fd.attrib
+            FD_2017 = "FD_2017" in fd.attrib
+            FD_2019 = "FD_2019" in fd.attrib
+            FD_2020 = "FD_2020" in fd.attrib
+            FD_2022 = "FD_2022" in fd.attrib
+
+            f.write(f"{f_name},{l_name},")
+            was_email_in = False
+            for i in range(0, 4):
+                if i < len(emails):
+                    if emails[i][0] in purchased_emails:
+                        print(f"No Use {f_name} {l_name} --> {emails[i][0]}")
+                        bought_ticket = True
+                        # was_email_in = True
+                        # break
+
+                    f.write(f"{emails[i][0]},")
+                else:
+                    f.write(",")
+
+            if was_email_in:
+                continue
+
+            f.write(
+                f"{'TRUE' if FD_2016 else ''},{'TRUE' if FD_2017 else ''},{'TRUE' if FD_2019 else ''},{'TRUE' if FD_2020 else ''},{'TRUE' if FD_2022 else ''},{'YES' if bought_ticket else ''}\n"
+            )
+
+            # return
+
+
 def main():
     # mailchimp_23()
 
-    mailchimp_update()
+    # mailchimp_update()
+
+    emails_for_tom()
 
 
 if __name__ == "__main__":
