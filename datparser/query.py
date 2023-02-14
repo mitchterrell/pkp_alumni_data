@@ -238,12 +238,47 @@ def emails_for_tom():
             # return
 
 
+def eugene_pkp_members():
+    tree = ET.parse("./new_output/assimilated_foundation.xml")
+    root = tree.getroot()
+
+    mn_gamma_members = root.xpath("./alumni[@chapter_of_initiation='Minnesota Gamma']")
+
+    print(len(mn_gamma_members))
+
+    min_date = datetime.now()
+    max_date = datetime.min
+    for member in mn_gamma_members:
+        date = datetime.strptime(member.get("initiation_date"), "%m/%d/%Y")
+
+        if date < min_date:
+            min_date = date
+        if date > max_date:
+            max_date = date
+
+        start = datetime.strptime("01/01/1965", "%m/%d/%Y")
+        end = datetime.strptime("12/31/1969", "%m/%d/%Y")
+
+        if date > start and date < end:
+            # print(
+            #     f"{member.get('preferred_first_name')} {member.get('legal_last_name')} --> {member.get('initiation_date')} --> {'Had Email' if member.find('emails') != None else ''}"
+            # )
+            print(
+                f"{member.get('preferred_first_name')} {member.get('legal_last_name')}"
+            )
+
+    print(min_date)
+    print(max_date)
+
+
 def main():
     # mailchimp_23()
 
     # mailchimp_update()
 
-    emails_for_tom()
+    # emails_for_tom()
+
+    eugene_pkp_members()
 
 
 if __name__ == "__main__":
